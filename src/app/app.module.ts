@@ -10,6 +10,10 @@ import { HttpModule } from '@angular/http';
 import { RegisterPage } from '../pages/register/register';
 import { ProviderPage } from '../pages/provider/provider';
 import { PatientPage } from '../pages/patient/patient';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     MyApp,
@@ -20,6 +24,9 @@ import { PatientPage } from '../pages/patient/patient';
   ],
   imports: [
     BrowserModule, HttpModule,
+    AngularFireModule.initializeApp(environment.firebase, 'medycare'),
+    AngularFireDatabaseModule, // imports firebase/database, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
