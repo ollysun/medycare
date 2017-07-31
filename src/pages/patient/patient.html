@@ -16,56 +16,66 @@
   <ion-list>
     <ion-item>
       <ion-label color="primary" stacked>Name</ion-label>
-      <ion-input type="text" placeholder="Your Name" [(ngModel)]="fullName"></ion-input>
+      <ion-input type="text" placeholder="Your Name" 
+      [(ngModel)]="patient.fullname"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>UserName</ion-label>
-      <ion-input type="text" placeholder="Your username" [(ngModel)]="userName"></ion-input>
+      <ion-input type="text" placeholder="Your username" 
+      [(ngModel)]="patient.username"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Email</ion-label>
-      <ion-input type="email" placeholder="Your Name" [(ngModel)]="email"></ion-input>
+      <ion-input type="email" placeholder="Your email" 
+      [(ngModel)]="patient.email"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Password</ion-label>
-      <ion-input type="password" placeholder="Your Name" [(ngModel)]="password"></ion-input>
+      <ion-input type="password" placeholder="Your Password"
+       [(ngModel)]="patient.password"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Confirm Password</ion-label>
-      <ion-input type="password" placeholder="Your Name" [(ngModel)]="confirmPassword"></ion-input>
+      <ion-input type="password" placeholder="Your Name" 
+      [(ngModel)]="confirmPassword"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Address</ion-label>
-      <ion-textarea placeholder="Your Address"></ion-textarea>
+      <ion-textarea [(ngModel)]='patient.address'
+       placeholder="Your Address"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Phone Number</ion-label>
-      <ion-input type="text" placeholder="Your PhoneNumber" [(ngModel)]="phoneNumber"></ion-input>
+      <ion-input type="text" 
+      placeholder="Your PhoneNumber" 
+      [(ngModel)]="patient.phoneNumber"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Gender</ion-label>
-        <ion-select [(ngModel)]="gender">
+        <ion-select [(ngModel)]="patient.gender">
           <ion-option value="male">Male</ion-option>
           <ion-option value="female">Female</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Country</ion-label>
-        <ion-select [(ngModel)]="country">
+        <ion-select [(ngModel)]="patient.country">
           <ion-option *ngFor="let country of countries" [value]="country">
+            {{country}}
           </ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>State</ion-label>
-        <ion-select [(ngModel)]="state">
-          <ion-option value="NG">Nigeria</ion-option>
-          <ion-option value="GH">Ghana</ion-option>
+        <ion-select [(ngModel)]="patient.state">
+          <ion-option value="LG">Lagos</ion-option>
+          <ion-option value="KA">Kaduna</ion-option>
         </ion-select>
       </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>DateOf Birth</ion-label>
-      <ion-datetime displayFormat="DD-MM-YYYY" [(ngModel)]="dateOfBirth"></ion-datetime>
+      <ion-datetime displayFormat="DD-MM-YYYY" pickerFormat="DD-MMM-YYYY" 
+      [(ngModel)]="patient.dateOfBirth"></ion-datetime>
     </ion-item>
     <ion-item>
         <button ion-button full (click)="signUp()">Sign In</button> 
