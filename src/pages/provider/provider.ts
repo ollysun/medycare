@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController,
+  LoadingController, 
+  Loading, 
+  AlertController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Provider } from '../../Model/Provider';
+import { AuthProvider } from '../../providers/auth/auth';
 /**
  * Generated class for the ProviderPage page.
  *
@@ -19,11 +23,15 @@ export class ProviderPage {
   countries = [];
   states = [];
   providerList: FirebaseListObservable<any[]>;
+  public loading:Loading;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     model: Provider,
-    db: AngularFireDatabase) {
+    db: AngularFireDatabase,
+    public authData: AuthProvider,
+    public loadingCtrl: LoadingController, 
+    public alertCtrl: AlertController) {
     this.provider = model;
     this.providerList = db.list('/providers');
     this.countries = [
@@ -39,7 +47,37 @@ export class ProviderPage {
     ]
   }
 
+  registerAuthUser()
+  {
+      this.authData.signupUser(this.provider.email,
+        this.provider.password)
+      .then((success) => {
+        //this.nav.setRoot(DiagonisePage);
+        console.log(success);
+      }, (error) => {
+        this.loading.dismiss().then( () => {
+          var errorMessage: string = error.message;
+            let alert = this.alertCtrl.create({
+              message: errorMessage,
+              buttons: [
+                {
+                  text: "Ok",
+                  role: 'cancel'
+                }
+              ]
+            });
+          alert.present();
+        });
+      });
+
+      this.loading = this.loadingCtrl.create({
+        dismissOnPageChange: true,
+      });
+      this.loading.present();
+  }
+
   signUp() {
+    this.registerAuthUser();
     this.providerList.push({
       title: this.provider.title,
       fullname: this.provider.fullname,

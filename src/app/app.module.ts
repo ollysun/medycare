@@ -15,6 +15,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { AuthProvider } from '../providers/auth/auth';
+import { EmailComposer } from '@ionic-native/email-composer';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -43,7 +46,8 @@ import { AuthProvider } from '../providers/auth/auth';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserServiceProvider,
-    AuthProvider
+    AuthProvider,
+    EmailComposer
   ]
 })
 export class AppModule {}

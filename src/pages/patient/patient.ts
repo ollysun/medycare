@@ -4,7 +4,6 @@ import { IonicPage, NavController,
   Loading, 
   AlertController, NavParams } from 'ionic-angular';
 import { Patient } from '../../Model/Patient';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthProvider } from '../../providers/auth/auth';
 import {
   AngularFireDatabase,
@@ -36,13 +35,11 @@ export class PatientPage {
     public navParams: NavParams,
     public model: Patient,
     db: AngularFireDatabase,
-    af: AngularFireAuth,
     public authData: AuthProvider,
     public loadingCtrl: LoadingController, 
     public alertCtrl: AlertController) {
     this.patient = model;
     this.patientList = db.list('/patients');
-    this.authuser = af;
   }
   //model = new Patient();
   countries:string[] = [
