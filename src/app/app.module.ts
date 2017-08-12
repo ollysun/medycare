@@ -16,6 +16,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { AuthProvider } from '../providers/auth/auth';
 import { EmailComposer } from '@ionic-native/email-composer';
+import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { EmailComposer } from '@ionic-native/email-composer';
     HomePage,
     RegisterPage,
     ProviderPage,
-    PatientPage
+    PatientPage,
+    ResetPasswordPage
   ],
   imports: [
     BrowserModule, HttpModule,
@@ -39,7 +41,8 @@ import { EmailComposer } from '@ionic-native/email-composer';
     HomePage,
     RegisterPage,
     ProviderPage,
-    PatientPage
+    PatientPage,
+    ResetPasswordPage
   ],
   providers: [
     StatusBar,
