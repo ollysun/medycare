@@ -17,7 +17,7 @@ import { environment } from '../environments/environment';
 import { AuthProvider } from '../providers/auth/auth';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
-
+import	{	ReactiveFormsModule	} from	'@angular/forms' ;
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { ResetPasswordPage } from '../pages/reset-password/reset-password';
     ResetPasswordPage
   ],
   imports: [
-    BrowserModule, HttpModule,
+    BrowserModule, HttpModule, ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'medycare'),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features

@@ -12,7 +12,36 @@
 
 </ion-header>
 
-
 <ion-content padding>
+    <ion-item>
+      <ion-label stacked>{{Name}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Search for the Symptoms</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+      <ion-list *ngIf="showList">
+        <ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+          {{ item }}
+        </ion-item>
+      </ion-list>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" Name='symptoms' [(ngModel)]="_symptoms" 
+      placeholder="Your Symptoms" readonly="true"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Tell us how you feel</ion-label>
+      <ion-textarea Name="tellUs" placeholder="Tell us how you feel"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Doctor Report</ion-label>
+      <ion-textarea Name="doctorReport" placeholder="Doctor report" readOnly></ion-textarea>
+    </ion-item>
+
+    <button ion-button block type="submit">
+      Submit
+    </button>
 
 </ion-content>

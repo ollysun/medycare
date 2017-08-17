@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RegisterPage } from '../register/register';
 import { ResetPasswordPage } from '../reset-password/reset-password';
+import { DiagonisePage } from '../diagonise/diagonise';
 
 import { AngularFireDatabase, FirebaseListObservable }
   from 'angularfire2/database';
@@ -40,7 +41,7 @@ export class HomePage {
    // } else {
       this.authData.loginUser(this.user.email, this.user.password)
         .then(authData => {
-          this.navCtrl.setRoot('Diagonise');
+          this.navCtrl.setRoot('DiagonisePage');
          // this
         }, error => {
           this.loading.dismiss().then(() => {
