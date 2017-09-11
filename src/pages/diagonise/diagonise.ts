@@ -40,8 +40,11 @@ export class DiagonisePage {
       treatBy: "Get Ampicillin or Norfloxacin drug"
     },
     { type: 'Measles', treatBy: " Take acetaminophen (Tylenol) drug, lots of rest, and fluids" },
-    { type: 'Mumps', treatBy: 'It can be prevented by Immunization' },
-    { type: 'Flu', treatBy: "by  taking antiviral medicine" },
+    { type: 'Mumps', treatBy: 'Taking analgesics (acetaminophen, ibuprofen) and applying warm or cold packs to the swollen and inflamed salivary gland region may be helpful' },
+    {
+      type: 'Flu',
+      treatBy: 'Increasing liquid intake, warm showers, and warm compresses, especially in the nasal area, can reduce the body aches and reduce nasal congestion or head congestion. Nasal strips and humidifiers may help reduce congestion, especially while trying to sleep.'
+    },
     {
       type: 'polio',
       treatBy: "Treatments vary according to the form of the disease,include antibiotics,pain-relieving medication,and physical therapy to strengthen weak muscles.Immunisation for children"
@@ -175,6 +178,9 @@ export class DiagonisePage {
           break;
         case 'Chest_discomfort' && 'cough' && 'sneezing' && 'headache' && 'sore_throat':
           this.response = 'Flu';
+          break;
+        case 'fever' && 'muscle_aches' && 'malaise' && 'low_appetite' && 'headache':
+          this.response = 'Mumps';
           break;
         default:
           this.response = 'false';
