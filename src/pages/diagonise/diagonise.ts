@@ -44,11 +44,10 @@ export class DiagonisePage {
     { type: 'Flu', treatBy: "by  taking antiviral medicine" },
     {
       type: 'polio',
-      treatBy: "Treatments vary according to the form of the disease, and may include antibiotics,pain-relieving medication, and physical therapy to strengthen weak muscles."
+      treatBy: "Treatments vary according to the form of the disease,include antibiotics,pain-relieving medication,and physical therapy to strengthen weak muscles.Immunisation for children"
     },
-    { type: 'Strep Throat', treatBy: ' the availability of antibiotics has dramatically reduced the scarlet fever mortality rate' },
-    { type: 'Vitamin C Deficiency', treatBy: 'Take vitamin C fruit juice' },
-    { type: 'SmallPox', treatBy: 'Go To Pharmacy and get the vaccine' },
+    { type: 'Strep Throat', treatBy: 'Use Salt gargle .2) Throat Sprays. 3)Hot or cold food with warm tea ' },
+    { type: 'SmallPox', treatBy: 'Go To Pharmacy and get the acetaminophen (Tylenol) vaccine' },
     { type: 'Typhoid Fever', treatBy: 'Go to pharmacy and ask for cyproflaxin or Ampicillin vaccine' },
     { type: 'Yellow Fever', treatBy: 'Take yello fever vaccine' },
     { type: 'Tuberculosis', treatBy: 'Go to Hospital and ask for Bacille Calmette-Gurin (BCG) vaccine' },
@@ -164,9 +163,18 @@ export class DiagonisePage {
         case 'fever' && 'headache' && 'weakness' && 'Nausea' && 'vomitting':
           this.response = 'Yellow Fever';
           break;
-          case 'fever' && 'headache' && 'leg_rash' && 'Hand_Rash' && 'Face_Rash' && 'abdominal_pain' 
+        case 'fever' && 'headache' && 'leg_rash' && 'Hand_Rash' && 'Face_Rash' && 'abdominal_pain'
           && 'back_pain':
-          this.response = 'Small Pox';
+          this.response = 'SmallPox';
+          break;
+        case 'sore_throat' && 'headache' && 'fever' && 'Upset_Stomach':
+          this.response = 'Strep Throat';
+          break;
+        case 'sore_throat' && 'headache' && 'muscle_stiffness(leg & hand)' && 'mailaise':
+          this.response = 'Polio';
+          break;
+        case 'Chest_discomfort' && 'cough' && 'sneezing' && 'headache' && 'sore_throat':
+          this.response = 'Flu';
           break;
         default:
           this.response = 'false';
