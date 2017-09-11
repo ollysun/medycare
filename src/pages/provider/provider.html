@@ -16,19 +16,15 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-        <ion-label>Title</ion-label>
-        <ion-select [(ngModel)]="provider.title">
-          <ion-option value="Dr">Dr</ion-option>
-          <ion-option value="Prof">Prof</ion-option>
-        </ion-select>
-      </ion-item>
+      <ion-label>Title</ion-label>
+      <ion-select [(ngModel)]="provider.title">
+        <ion-option value="Dr">Dr</ion-option>
+        <ion-option value="Prof">Prof</ion-option>
+      </ion-select>
+    </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Name</ion-label>
       <ion-input type="text" [(ngModel)]='provider.fullname' placeholder="Your Name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" stacked>Username</ion-label>
-      <ion-input type="text" [(ngModel)]='provider.username' placeholder="Username"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Email</ion-label>
@@ -40,42 +36,32 @@
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Address</ion-label>
-      <ion-textarea [(ngModel)]='provider.address' 
-                    placeholder="Enter address"></ion-textarea>
+      <ion-textarea [(ngModel)]='provider.address' placeholder="Enter address"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Phone</ion-label>
-      <ion-input type="text" [(ngModel)]='provider.phoneNo' 
-                 placeholder="Enter the phone"></ion-input>
+      <ion-input type="text" [(ngModel)]='provider.phoneNo' placeholder="Enter the phone"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label>Country</ion-label>
-        <ion-select [(ngModel)]="provider.country">
-          <ion-option *ngFor="let country of countries" [value]="country">
-            {{country}}
-          </ion-option>
-        </ion-select>
+      <ion-label color="primary" stacked>Clinic Or Hospital Address</ion-label>
+      <ion-textarea [(ngModel)]='provider.clinic' 
+      placeholder="Enter the address"></ion-textarea>
     </ion-item>
-    <ion-item>
-        <ion-label>State</ion-label>
-        <ion-select [(ngModel)]="provider.state">
-          <ion-option *ngFor="let state of states" [value]="state">
-            {{state}}
-          </ion-option>
-        </ion-select>
-      </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Specialty</ion-label>
-      <ion-input type="text" [(ngModel)]='provider.specialty' 
-                  placeholder="Enter the phone"></ion-input>
+      <ion-select [(ngModel)]="provider.specialty">
+        <ion-option *ngFor="let specialty of specialities" 
+        [value]="specialty">
+          {{specialty}}
+        </ion-option>
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label color="primary" stacked>Description</ion-label>
-      <ion-textarea [(ngModel)]='provider.description' 
-                    placeholder="Enter the description"></ion-textarea>
+      <ion-textarea [(ngModel)]='provider.description' placeholder="Enter the description"></ion-textarea>
     </ion-item>
     <ion-item>
-        <button ion-button full (click)="signUp()">Sign Up</button> 
+      <button ion-button full (click)="signUp()">Sign Up</button>
     </ion-item>
   </ion-list>
 </ion-content>

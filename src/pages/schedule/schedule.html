@@ -1,0 +1,42 @@
+<!--
+  Generated template for the SchedulePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Meet Doctor</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="scheduleForm" (submit)="schedule()" novalidate>
+
+    <ion-item>
+      <ion-label stacked>Doctor Speciality</ion-label>
+      <ion-select formControlName="speciality">
+
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Doctor Name</ion-label>
+      <ion-select formControlName="doctorName">
+
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Tell Us how you feel</ion-label>
+      <ion-textarea formControlName="symptoms" 
+           placeholder="Your Address"></ion-textarea>
+    </ion-item>
+    <button ion-button block type="submit">
+      schedule
+    </button>
+  </form>
+</ion-content>

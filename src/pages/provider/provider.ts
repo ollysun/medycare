@@ -6,6 +6,7 @@ import { IonicPage, NavController,
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Provider } from '../../Model/Provider';
 import { AuthProvider } from '../../providers/auth/auth';
+import { HomeProviderPage } from '../home-provider/home-provider';
 /**
  * Generated class for the ProviderPage page.
  *
@@ -20,7 +21,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class ProviderPage {
   provider: any;
-  countries = [];
+  specialities = [];
   states = [];
   providerList: FirebaseListObservable<any[]>;
   public loading:Loading;
@@ -34,26 +35,21 @@ export class ProviderPage {
     public alertCtrl: AlertController) {
     this.provider = model;
     this.providerList = db.list('/providers');
-    this.countries = [
-      "Nigeria",
-      "Ghana",
-      "Tanzania"
+    this.specialities = [
+      'Surgical Technologist',
+      'Pharmacist',
+      'Dental Hygenist',
+      'Cardiology',
+      'Obstetrics',
+      'Gynecology'
     ];
-
-    this.states = [
-      "Lagos",
-      "Kaduna",
-      "Osun"
-    ]
   }
 
-  registerAuthUser()
+  signUp()
   {
-      this.authData.signupUser(this.provider.email,
-        this.provider.password)
+      this.authData.createProviderUser(this.provider)
       .then((success) => {
-        //this.nav.setRoot(DiagonisePage);
-        console.log(success);
+        this.navCtrl.setRoot(HomeProviderPage);
       }, (error) => {
         this.loading.dismiss().then( () => {
           var errorMessage: string = error.message;
@@ -76,25 +72,24 @@ export class ProviderPage {
       this.loading.present();
   }
 
-  signUp() {
-    this.registerAuthUser();
-    this.providerList.push({
-      title: this.provider.title,
-      fullname: this.provider.fullname,
-      username: this.provider.username,
-      email: this.provider.email,
-      password: this.provider.password,
-      address: this.provider.address,
-      phoneNumber: this.provider.phoneNo,
-      country: this.provider.country,
-      state: this.provider.state,
-      specialty: this.provider.specialty
-    }).then(newProvider => {
-      console.log(newProvider);
-    }, error => {
-      console.log(error);
-    });
-  }
+  // signUp() {
+  //   this.registerAuthUser();
+  //   this.providerList.push({
+  //     title: this.provider.title,
+  //     fullname: this.provider.fullname,
+  //     username: this.provider.username,
+  //     email: this.provider.email,
+  //     password: this.provider.password,
+  //     address: this.provider.address,
+  //     phoneNumber: this.provider.phoneNo,
+  //     clinic: this.provider.clinic,
+  //     specialty: this.provider.specialty
+  //   }).then(newProvider => {
+  //     console.log(newProvider);
+  //   }, error => {
+  //     console.log(error);
+  //   });
+  // }
 
 
   ionViewDidLoad() {

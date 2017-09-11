@@ -1,0 +1,34 @@
+<ion-navbar>
+  <button menuToggle side="left">
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>
+    Home Patient
+  </ion-title>
+</ion-navbar>
+
+<ion-menu [content]="content" (ionClose)="ionClosed()" (ionOpen)="ionOpened()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Patient Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+       <button ion-item menuClose (click)="openPage(diagonisePage)">
+        Diagonise
+      </button> 
+      <button ion-item menuClose (click)="openPage(historyPage)">
+        Medical History
+      </button>
+      <button ion-item menuClose (click)="openPage(schedulePage)">
+        Schedule
+      </button>
+      <button ion-button menuClose>
+        Close Menu
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav #content [root]="rootPage" swipeBackEnabled="false"></ion-nav>

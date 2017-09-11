@@ -4,6 +4,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
+import { HomePatientPage } from '../pages/home-patient/home-patient';
+import { DiagonisePage } from '../pages/diagonise/diagonise';
 
 
 @Component({

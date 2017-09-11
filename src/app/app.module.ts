@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule } 
+from 'ionic-angular';
+import { IonTagsInputModule } from "ionic-tags-input";
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
@@ -18,6 +20,14 @@ import { AuthProvider } from '../providers/auth/auth';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import	{	ReactiveFormsModule	} from	'@angular/forms' ;
+import { HomePatientPage } from '../pages/home-patient/home-patient';
+import { HistoryPage } from '../pages/history/history';
+import { SchedulePage } from '../pages/schedule/schedule';
+import { DiagonisePage } from '../pages/diagonise/diagonise';
+import { LocalstorageProvider } from '../providers/localstorage/localstorage';
+import { IonicStorageModule } from '@ionic/storage';
+import { DiagoniseProvider } from '../providers/diagonise/diagonise';
+
 
 @NgModule({
   declarations: [
@@ -26,14 +36,20 @@ import	{	ReactiveFormsModule	} from	'@angular/forms' ;
     RegisterPage,
     ProviderPage,
     PatientPage,
-    ResetPasswordPage
+    ResetPasswordPage,
+    HomePatientPage,
+    HistoryPage,
+    SchedulePage,
+    DiagonisePage
   ],
   imports: [
     BrowserModule, HttpModule, ReactiveFormsModule,
+    IonTagsInputModule,
     AngularFireModule.initializeApp(environment.firebase, 'medycare'),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -42,7 +58,11 @@ import	{	ReactiveFormsModule	} from	'@angular/forms' ;
     RegisterPage,
     ProviderPage,
     PatientPage,
-    ResetPasswordPage
+    ResetPasswordPage,
+    HomePatientPage,
+    HistoryPage,
+    SchedulePage,
+    DiagonisePage
   ],
   providers: [
     StatusBar,
@@ -50,7 +70,9 @@ import	{	ReactiveFormsModule	} from	'@angular/forms' ;
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserServiceProvider,
     AuthProvider,
-    EmailComposer
+    EmailComposer,
+    LocalstorageProvider,
+    DiagoniseProvider
   ]
 })
 export class AppModule {}

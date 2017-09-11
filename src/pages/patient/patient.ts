@@ -9,7 +9,7 @@ import {
   AngularFireDatabase,
   FirebaseListObservable,
 } from 'angularfire2/database';
-//import { DiagonisePage } from '../diagonise/diagonise';
+import { HomePatientPage } from '../home-patient/home-patient';
 
 /**
  * Generated class for the PatientPage page.
@@ -42,20 +42,20 @@ export class PatientPage {
     this.patientList = db.list('/patients');
   }
   //model = new Patient();
-  countries:string[] = [
-          'Nigeria', 'Ghana'
+  bloodTypes:string[] = [
+          'A+', 'B+', 'OO',
+          'AB+'
   ];
   ionViewDidLoad() {
     console.log('ionViewDidLoad PatientPage');
   }
 
-  registerAuthUser()
+  signUp()
   {
-      this.authData.signupUser(this.patient.email,
-        this.patient.password)
+      this.authData.createPatientUser(this.patient)
       .then((success) => {
-        //this.nav.setRoot(DiagonisePage);
-        console.log(success);
+        this.navCtrl.setRoot(HomePatientPage);
+        //console.log(success);
       }, (error) => {
         this.loading.dismiss().then( () => {
           var errorMessage: string = error.message;
@@ -77,25 +77,25 @@ export class PatientPage {
       });
       this.loading.present();
   }
-  signUp() {
-    this.registerAuthUser()
-    this.patientList.push({
-      fullname: this.patient.fullname,
-      username: this.patient.username,
-      email: this.patient.email,
-      password: this.patient.password,
-      address: this.patient.address,
-      phoneNumber: this.patient.phoneNumber,
-      gender: this.patient.gender,
-      country: this.patient.country,
-      state: this.patient.state,
-      dateOfBirth: this.patient.dateOfBirth
-    }).then(newPatient => {
-      console.log(newPatient);
-    }, error => {
-      console.log(error);
-    });
+  // signUp() {
+  //   this.registerAuthUser()
+  //   this.patientList.push({
+  //     fullname: this.patient.fullname,
+  //     email: this.patient.email,
+  //     password: this.patient.password,
+  //     address: this.patient.address,
+  //     phoneNumber: this.patient.phoneNumber,
+  //     gender: this.patient.gender,
+  //     bloodType: this.patient.bloodType,
+  //     weight: this.patient.weight,
+  //     height: this.patient.height,
+  //     dateOfBirth: this.patient.dateOfBirth
+  //   }).then(newPatient => {
+  //     console.log(newPatient);
+  //   }, error => {
+  //     console.log(error);
+  //   });
 
-  }
+  // }
 
 }

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RegisterPage } from '../register/register';
 import { ResetPasswordPage } from '../reset-password/reset-password';
 import { DiagonisePage } from '../diagonise/diagonise';
+import { HomePatientPage } from '../home-patient/home-patient';
+import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
 
 import { AngularFireDatabase, FirebaseListObservable }
   from 'angularfire2/database';
@@ -29,49 +31,50 @@ export class HomePage {
     db: AngularFireDatabase,
     public authData: AuthProvider,
     public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    private localstorage: LocalstorageProvider) {
 
   }
 
   login() {
     console.log(this.user);
     console.log(this.user.email);
-  //  if (!this.loginForm.valid) {
-      //console.log(this.loginForm.value);
-   // } else {
-      this.authData.loginUser(this.user.email, this.user.password)
-        .then(authData => {
-          this.navCtrl.setRoot('DiagonisePage');
-         // this
-        }, error => {
-          this.loading.dismiss().then(() => {
-            let alert = this.alertCtrl.create({
-              message: error.message,
-              buttons: [
-                {
-                  text: "Ok",
-                  role: 'cancel'
-                }
-              ]
-            });
-            alert.present();
-          });
-        });
+    this.localstorage.setEmail(this.user.email);
+    if (this.user.email === "ollysun@gmail.com") {
+      this.navCtrl.setRoot(HomePatientPage);
+    }
+    //  if (!this.loginForm.valid) {
+    //console.log(this.loginForm.value);
+    // } else {
+    // this.authData.loginUser(this.user.email, this.user.password)
+    //   .then(authData => {
+    //     this.navCtrl.setRoot(HomePatientPage);
+    //    // this
+    //   }, error => {
+    //     this.loading.dismiss().then(() => {
+    //       let alert = this.alertCtrl.create({
+    //         message: error.message,
+    //         buttons: [
+    //           {
+    //             text: "Ok",
+    //             role: 'cancel'
+    //           }
+    //         ]
+    //       });
+    //       alert.present();
+    //     });
+    //   });
 
-      this.loading = this.loadingCtrl.create({
-        dismissOnPageChange: true,
-      });
-      this.loading.present();
- //   }
-
-
-
+    // this.loading = this.loadingCtrl.create({
+    //   dismissOnPageChange: true,
+    // });
+    // this.loading.present();
   }
 
   goTo(page) {
     if (page === 'register') {
       this.navCtrl.push(RegisterPage);
-    }else if(page === 'resetPassword'){
+    } else if (page === 'resetPassword') {
       this.navCtrl.push(ResetPasswordPage);
     }
   }
@@ -82,6 +85,6 @@ export class HomePage {
     }
   }
 
-  
+
 
 }
