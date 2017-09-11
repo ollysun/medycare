@@ -54,7 +54,7 @@ export class DiagonisePage {
     { type: 'Tuberculosis', treatBy: 'Go to Hospital and ask for Bacille Calmette-Gurin (BCG) vaccine' },
     { type: 'Hepatitis A', treatBy: 'See your doctor to recommend medicines to help relieve your symptoms' },
     { type: 'Hepatitis B', treatBy: 'Get vaccine called Interferon-alpha from the Pharmacy' }
-    
+
   ]
   constructor(
     public navCtrl: NavController,
@@ -160,6 +160,13 @@ export class DiagonisePage {
           break;
         case 'dry_cough' && 'conjunctivitis' && 'runny_nose' && 'High_fever':
           this.response = 'Measles';
+          break;
+        case 'fever' && 'headache' && 'weakness' && 'Nausea' && 'vomitting':
+          this.response = 'Yellow Fever';
+          break;
+          case 'fever' && 'headache' && 'leg_rash' && 'Hand_Rash' && 'Face_Rash' && 'abdominal_pain' 
+          && 'back_pain':
+          this.response = 'Small Pox';
           break;
         default:
           this.response = 'false';
