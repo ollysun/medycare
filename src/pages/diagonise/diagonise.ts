@@ -31,10 +31,30 @@ export class DiagonisePage {
   _symptoms: string;
   tags = [];
   diagoniseList: FirebaseListObservable<any[]>;
-  _diseasesType:string;
-  _doctorReport:string;
-  _diseasesArray:any = [
-    { type: 'Malaria Fever', medic: 'Go to Pharmacy, Get Amoxylin' }
+  _diseasesType: string;
+  _doctorReport: string;
+  _diseasesArray: any = [
+    { type: 'Malaria Fever', treatBy: 'Go to Pharmacy, Get Chloroquine or quinine or Coartem' },
+    {
+      type: 'Cholera',
+      treatBy: "Get Ampicillin or Norfloxacin drug"
+    },
+    { type: 'Measles', treatBy: " Take acetaminophen (Tylenol) drug, lots of rest, and fluids" },
+    { type: 'Mumps', treatBy: 'It can be prevented by Immunization' },
+    { type: 'Flu', treatBy: "by  taking antiviral medicine" },
+    {
+      type: 'polio',
+      treatBy: "Treatments vary according to the form of the disease, and may include antibiotics,pain-relieving medication, and physical therapy to strengthen weak muscles."
+    },
+    { type: 'Strep Throat', treatBy: ' the availability of antibiotics has dramatically reduced the scarlet fever mortality rate' },
+    { type: 'Vitamin C Deficiency', treatBy: 'Take vitamin C fruit juice' },
+    { type: 'SmallPox', treatBy: 'Go To Pharmacy and get the vaccine' },
+    { type: 'Typhoid Fever', treatBy: 'Go to pharmacy and ask for cyproflaxin or Ampicillin vaccine' },
+    { type: 'Yellow Fever', treatBy: 'Take yello fever vaccine' },
+    { type: 'Tuberculosis', treatBy: 'Go to Hospital and ask for Bacille Calmette-Gurin (BCG) vaccine' },
+    { type: 'Hepatitis A', treatBy: 'See your doctor to recommend medicines to help relieve your symptoms' },
+    { type: 'Hepatitis B', treatBy: 'Get vaccine called Interferon-alpha from the Pharmacy' }
+    
   ]
   constructor(
     public navCtrl: NavController,
@@ -60,12 +80,23 @@ export class DiagonisePage {
       'coldness',
       'shivering',
       'sneezing',
-      'stomach Upset',
+      'stomach pain',
       'dizziness',
       'body weakness',
       'insomia',
       'bodypain',
       'loss appetite',
+      'fatigue',
+      'diarrhea',
+      'vomiting',
+      'leg cramps',
+      'sweating',
+      'muscle pain',
+      'fever',
+      'malaise',
+      'jaundice',
+      'muscle aches',
+      ''
     ];
   }
 
@@ -102,28 +133,21 @@ export class DiagonisePage {
       // } else {
       //   this.response = 'false';
       // }
-        console.log(type);
-      switch(type){
-        case 'headache' && 'body weakness' && 'sneezing':
-        this.response = 'Malaria Fever';
-        break;
-        case 'body weakness' && 'stomach ache' && 'headache':
-        this.response = 'Typhoid Fever'; 
-        break;
-        case 'feeling tired' && 'upset stomach' && 'diarrhea'
-             && 'fever' && 'loss of appetite':
-        this.response = 'Hepatitis A';
-        break;
-        case 'constant weakness' && 'vomiting' && 'dizziness':
-          this.response = 'Pregnancy';
+      console.log(type);
+      switch (type) {
+        case 'headache' && 'fever' && 'sweating' && 'vomiting' || 'muscle_pain':
+          this.response = 'Malaria';
           break;
-        case 'unpleasant mouth odour' && 'dry mouth' && 'coating on the tongue':
-          this.response = 'Mouth Odour';
+        case 'poor_appetite' && 'abdominal_pain' && 'high_fever' && 'constipation':
+          this.response = 'Typhoid Fever';
           break;
-        case 'vision problems' && 'hearing problems' 
-          && 'balance problems' && 'changes in mental ability'
-          && 'nausea' && 'facial paralysis' && 'numbness in extremities':
-          this.response = 'Brain Tumor';
+        case 'feeling_tired' && 'upset_stomach' && 'diarrhea'
+          && 'fever' && 'loss_of_appetite':
+          this.response = 'Hepatitis A';
+          break;
+        case 'fatigue' && 'jaundice' && 'nausea'
+          && 'abdominal_pain' && 'loss_of_appetite':
+          this.response = 'Hepatitis B';
           break;
         case 'dehydration' && 'hunger'
           && 'increased urination' && 'increased thirst'
@@ -131,8 +155,14 @@ export class DiagonisePage {
           && 'blurred vision':
           this.response = 'Diabetes';
           break;
+        case 'leg_cramps' && 'diarrhea' && 'vomiting':
+          this.response = 'Cholera';
+          break;
+        case 'dry_cough' && 'conjunctivitis' && 'runny_nose' && 'High_fever':
+          this.response = 'Measles';
+          break;
         default:
-        this.response = 'false';
+          this.response = 'false';
       }
     }
     // symptomType.forEach(function (type) {
@@ -152,13 +182,13 @@ export class DiagonisePage {
     this._symptoms = this.textItem.join();
   }
 
-prescribe =function(){
-  this.getDiseasesType(this.textItem);
- this._diseasesType = 'You are having ' + this.response;
- console.log(this.getSicknessType(this.response));
- //this._doctorReport = this._diseasesArray.map
- //this._doctorReport = 'You will need medication';
-}
+  prescribe = function () {
+    this.getDiseasesType(this.textItem);
+    this._diseasesType = 'You are having ' + this.response;
+    console.log(this.getSicknessType(this.response));
+    //this._doctorReport = this._diseasesArray.map
+    //this._doctorReport = 'You will need medication';
+  }
 
   getSicknessType(symptom: string): string {
     // var sympType: any;
