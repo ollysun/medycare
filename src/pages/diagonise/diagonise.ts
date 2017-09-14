@@ -34,7 +34,7 @@ export class DiagonisePage {
   _diseasesType: string;
   _doctorReport: string;
   _diseasesArray: any = [
-    { type: 'Malaria Fever', treatBy: 'Go to Pharmacy, Get Chloroquine or quinine or Coartem' },
+    { type: 'Malaria', treatBy: 'Go to Pharmacy, Get Chloroquine or quinine or Coartem' },
     {
       type: 'Cholera',
       treatBy: "Get Ampicillin or Norfloxacin drug"
@@ -82,23 +82,46 @@ export class DiagonisePage {
       'coldness',
       'shivering',
       'sneezing',
-      'stomach pain',
+      'stomach_pain',
       'dizziness',
-      'body weakness',
+      'body_weakness',
       'insomia',
       'bodypain',
-      'loss appetite',
+      'poor_appetite',
       'fatigue',
       'diarrhea',
       'vomiting',
       'leg cramps',
       'sweating',
-      'muscle pain',
+      'muscle_pain',
       'fever',
       'malaise',
       'jaundice',
-      'muscle aches',
-      ''
+      'muscle_ache',
+      'abdominal_pain',
+      'high_fever',
+      'feeling_tired',
+      'upset_stomach',
+      'loss_of_appetite',
+      'nausea',
+      'dehydration',
+      'hunger',
+      'increased_urination',
+       'increased_thirst',
+       'weight_loss_or_gain',
+       'blurred_vision',
+       'leg_cramps',
+       'dry_cough',
+       'conjunctivitis',
+       'runny_nose',
+       'leg_rash',
+       'hand_Rash',
+       'face_Rash',
+       'back_pain',
+       'sore_throat',
+       'chest_discomfort',
+       'cough',
+       'muscle_stiffness(leg & hand)'
     ];
   }
 
@@ -129,15 +152,8 @@ export class DiagonisePage {
   getDiseasesType = function (symptomType) {
     //var response: string = 'initial';
     for (let type of symptomType) {
-      // if (type == 'headache' && type == 'body weakness'
-      //   || type == 'sneezing') {
-      //   this.response = 'Malaria Fever';
-      // } else {
-      //   this.response = 'false';
-      // }
-      console.log(type);
       switch (type) {
-        case 'headache' && 'fever' && 'sweating' && 'vomiting' || 'muscle_pain':
+        case 'headache' && 'fever' && 'sweating' && 'vomiting':
           this.response = 'Malaria';
           break;
         case 'poor_appetite' && 'abdominal_pain' && 'high_fever' && 'constipation':
@@ -152,34 +168,34 @@ export class DiagonisePage {
           this.response = 'Hepatitis B';
           break;
         case 'dehydration' && 'hunger'
-          && 'increased urination' && 'increased thirst'
-          && 'weight loss or gain' && 'fatigue' && 'vommitting'
+          && 'increased_urination' && 'increased_thirst'
+          && 'weight_loss_or_gain' && 'fatigue' && 'vomiting'
           && 'blurred vision':
           this.response = 'Diabetes';
           break;
         case 'leg_cramps' && 'diarrhea' && 'vomiting':
           this.response = 'Cholera';
           break;
-        case 'dry_cough' && 'conjunctivitis' && 'runny_nose' && 'High_fever':
+        case 'dry_cough' && 'conjunctivitis' && 'runny_nose' && 'high_fever':
           this.response = 'Measles';
           break;
         case 'fever' && 'headache' && 'weakness' && 'Nausea' && 'vomitting':
           this.response = 'Yellow Fever';
           break;
-        case 'fever' && 'headache' && 'leg_rash' && 'Hand_Rash' && 'Face_Rash' && 'abdominal_pain'
+        case 'fever' && 'headache' && 'leg_rash' && 'hand_Rash' && 'face_Rash' && 'abdominal_pain'
           && 'back_pain':
           this.response = 'SmallPox';
           break;
-        case 'sore_throat' && 'headache' && 'fever' && 'Upset_Stomach':
+        case 'sore_throat' && 'headache' && 'fever' && 'upset_stomach':
           this.response = 'Strep Throat';
           break;
-        case 'sore_throat' && 'headache' && 'muscle_stiffness(leg & hand)' && 'mailaise':
+        case 'sore_throat' && 'headache' && 'muscle_stiffness(leg & hand)' && 'malaise':
           this.response = 'Polio';
           break;
-        case 'Chest_discomfort' && 'cough' && 'sneezing' && 'headache' && 'sore_throat':
+        case 'chest_discomfort' && 'cough' && 'sneezing' && 'headache' && 'sore_throat':
           this.response = 'Flu';
           break;
-        case 'fever' && 'muscle_aches' && 'malaise' && 'low_appetite' && 'headache':
+        case 'fever' && 'muscle_ache' && 'malaise' && 'low_appetite' && 'headache':
           this.response = 'Mumps';
           break;
         default:
@@ -217,10 +233,19 @@ export class DiagonisePage {
     // var output = this.getDiseasesType(sympType);
     // console.log('diseases type', output);
     // return;
-    const val = this._diseasesArray.filter(c => c.type === symptom);
-    console.log(val.medic);
-    return val.medic;
+    console.log('symptoms ' + symptom);
+    let val = this._diseasesArray.filter(c => c.type == symptom);
+    // var treat = val.map(function (task, index, array) {
+    //     console.log(task.treatBy);
+    //      return task.treatBy; 
+    //  });
 
+     var presc = val.reduce(function(tr) {
+      return tr.treatBy; // return previous total plus current age
+  }, 0); // initialize age with 0 that will be passed as memo
+  
+  console.log("Sum of all developer ages is " + presc);
+     return ;
   }
 
   ionViewDidLoad() {

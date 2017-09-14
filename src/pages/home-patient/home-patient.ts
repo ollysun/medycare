@@ -4,6 +4,11 @@ import { IonicPage, NavController, NavParams, Nav,
 import { DiagonisePage } from '../diagonise/diagonise';
 import { HistoryPage } from '../history/history';
 import { SchedulePage } from '../schedule/schedule';
+import { AngularFireDatabase, FirebaseListObservable }
+from 'angularfire2/database';
+import { AuthProvider } from '../../providers/auth/auth';
+import { HomePage } from '../home/home';
+
 
 /**
  * Generated class for the HomePatientPage page.
@@ -27,6 +32,7 @@ export class HomePatientPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public menu:MenuController,
+              public authData: AuthProvider,
               public events: Events) {
     this.rootPage = DiagonisePage;
     this.historyPage = HistoryPage;
@@ -52,6 +58,12 @@ export class HomePatientPage {
 
   openPage(p) {
     this.rootPage = p;
+  }
+
+  logout()
+  {
+      this.authData.logoutUser();
+      this.navCtrl.setRoot(HomePage);
   }
 
   // diagonise(Page) {
