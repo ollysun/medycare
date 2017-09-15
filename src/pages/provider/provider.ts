@@ -21,7 +21,7 @@ import { HomeProviderPage } from '../home-provider/home-provider';
 })
 export class ProviderPage {
   provider: any;
-  specialities = [];
+  specialities:string[];
   states = [];
   providerList: FirebaseListObservable<any[]>;
   public loading:Loading;
@@ -34,14 +34,12 @@ export class ProviderPage {
     public loadingCtrl: LoadingController, 
     public alertCtrl: AlertController) {
     this.provider = model;
-    this.providerList = db.list('/providers');
     this.specialities = [
+      'medical doctor',
       'Surgical Technologist',
       'Pharmacist',
       'Dental Hygenist',
       'Cardiology',
-      'Obstetrics',
-      'Gynecology'
     ];
   }
 

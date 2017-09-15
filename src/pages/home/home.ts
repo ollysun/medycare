@@ -33,7 +33,7 @@ export class HomePage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     private localstorage: LocalstorageProvider) {
-
+      this.checkName();      
   }
 
   login() {
@@ -69,6 +69,12 @@ export class HomePage {
     //   dismissOnPageChange: true,
     // });
     // this.loading.present();
+  }
+
+  checkName = function ()
+  {
+    let patientArray = this.authData.getPatientName();
+    console.log(patientArray);
   }
 
   goTo(page) {

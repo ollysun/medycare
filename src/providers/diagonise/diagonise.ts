@@ -28,7 +28,7 @@ export class DiagoniseProvider {
 
   createDiagonise = function (diagonise)
   {
-
+      
   }
 
 }

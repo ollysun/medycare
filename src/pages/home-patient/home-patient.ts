@@ -9,7 +9,6 @@ from 'angularfire2/database';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
 
-
 /**
  * Generated class for the HomePatientPage page.
  *
@@ -23,7 +22,6 @@ import { HomePage } from '../home/home';
 })
 export class HomePatientPage {
   @ViewChild(DiagonisePage) dpage: DiagonisePage;
-  //@ViewChild(Nav) nav: Nav;
   rootPage: any = this;
   private diagonisePage;
   private historyPage;
@@ -64,22 +62,7 @@ export class HomePatientPage {
   {
       this.authData.logoutUser();
       this.navCtrl.setRoot(HomePage);
-  }
-
-  // diagonise(Page) {
-  //   this.nav.setRoot(DiagonisePage);
-  // }
-
-  closeMenu()
-  {
-
-  }
-
-  meetDoctor() {
-    
-  }
-
-  history() {
+      //this.navCtrl.push(PatientPage);
   }
 
 }

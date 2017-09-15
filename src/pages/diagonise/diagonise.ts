@@ -56,8 +56,16 @@ export class DiagonisePage {
     { type: 'Tuberculosis', treatBy: 'Go to Hospital and ask for Bacille Calmette-Gurin (BCG) vaccine' },
     { type: 'Hepatitis A', treatBy: 'See your doctor to recommend medicines to help relieve your symptoms' },
     { type: 'Hepatitis B', treatBy: 'Get vaccine called Interferon-alpha from the Pharmacy' }
+  ];
 
-  ]
+  model: {
+    patientName:'',
+    patientEmail:'',
+    symptoms:'',
+    sicknessType:'',
+    doctorPrescription:''
+  }
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -76,7 +84,7 @@ export class DiagonisePage {
 
   }
 
-  initializeItems() {
+  initializeItems() {    
     this.items = [
       'headache',
       'coldness',
@@ -84,14 +92,14 @@ export class DiagonisePage {
       'sneezing',
       'stomach_pain',
       'dizziness',
-      'body_weakness',
+      'weakness',
       'insomia',
       'bodypain',
       'poor_appetite',
       'fatigue',
       'diarrhea',
       'vomiting',
-      'leg cramps',
+      'leg_cramps',
       'sweating',
       'muscle_pain',
       'fever',
@@ -110,7 +118,6 @@ export class DiagonisePage {
        'increased_thirst',
        'weight_loss_or_gain',
        'blurred_vision',
-       'leg_cramps',
        'dry_cough',
        'conjunctivitis',
        'runny_nose',
@@ -121,7 +128,9 @@ export class DiagonisePage {
        'sore_throat',
        'chest_discomfort',
        'cough',
-       'muscle_stiffness(leg & hand)'
+       'muscle_stiffness(leg & hand)',
+       'constipation',
+       'blurred_vision'
     ];
   }
 
@@ -148,34 +157,35 @@ export class DiagonisePage {
       this.showList = false;
     }
   }
+  
+  diseasesCategory = {
+    'malaria':["headache","vomiting", "weakness", "fever"],
+    'Typhoid Fever': ["poor_appetite","abdominal_pain", "high_fever","constipation"],
+    'Hepatitis A': ["feeling_tired","upset_stomach", "diarrhea", "fever", "loss_of_appetite"],
+    'Hepatitis B': ["fatigue","jaundice", "nausea","abdominal_pain","loss_of_appetite"],
+    'Diabetes': ["dehydration", "hunger", "increased_urination","increased_thirst","weight_loss_or_gain",
+                 "fatigue","vomiting","blurred_vision"],
+    'Cholera':["leg_cramps", "diarrhea","vomiting"],
+  };
 
+  check = function(symptomType)
+  {
+    symptomType.sort();
+      for (let key in this.diseasesCategory) {
+        const keyV = this.diseasesCategory[key].sort();
+        if (symptomType.join(',') === keyV.join(','))
+        {
+          return key;
+        }else{
+          console.log('key ' + false);
+        }
+      }
+  }
   getDiseasesType = function (symptomType) {
     //var response: string = 'initial';
+    this.check(symptomType);    
     for (let type of symptomType) {
-      switch (type) {
-        case 'headache' && 'fever' && 'sweating' && 'vomiting':
-          this.response = 'Malaria';
-          break;
-        case 'poor_appetite' && 'abdominal_pain' && 'high_fever' && 'constipation':
-          this.response = 'Typhoid Fever';
-          break;
-        case 'feeling_tired' && 'upset_stomach' && 'diarrhea'
-          && 'fever' && 'loss_of_appetite':
-          this.response = 'Hepatitis A';
-          break;
-        case 'fatigue' && 'jaundice' && 'nausea'
-          && 'abdominal_pain' && 'loss_of_appetite':
-          this.response = 'Hepatitis B';
-          break;
-        case 'dehydration' && 'hunger'
-          && 'increased_urination' && 'increased_thirst'
-          && 'weight_loss_or_gain' && 'fatigue' && 'vomiting'
-          && 'blurred vision':
-          this.response = 'Diabetes';
-          break;
-        case 'leg_cramps' && 'diarrhea' && 'vomiting':
-          this.response = 'Cholera';
-          break;
+      switch (type.trim()) {
         case 'dry_cough' && 'conjunctivitis' && 'runny_nose' && 'high_fever':
           this.response = 'Measles';
           break;
@@ -210,7 +220,6 @@ export class DiagonisePage {
     //     this.response = 'false';
     //   }
     // });
-    console.log('res', this.response);
     //return this.response;
   }
 
@@ -220,32 +229,18 @@ export class DiagonisePage {
   }
 
   prescribe = function () {
-    this.getDiseasesType(this.textItem);
+    this.response = this.check(this.textItem);
+    if (this.response === false)
+    {
+        
+    }
     this._diseasesType = 'You are having ' + this.response;
-    console.log(this.getSicknessType(this.response));
-    //this._doctorReport = this._diseasesArray.map
-    //this._doctorReport = 'You will need medication';
+    this._doctorReport = this.getSicknessType(this.response);
   }
 
   getSicknessType(symptom: string): string {
-    // var sympType: any;
-    // sympType = this._symptoms.split(',')
-    // var output = this.getDiseasesType(sympType);
-    // console.log('diseases type', output);
-    // return;
-    console.log('symptoms ' + symptom);
-    let val = this._diseasesArray.filter(c => c.type == symptom);
-    // var treat = val.map(function (task, index, array) {
-    //     console.log(task.treatBy);
-    //      return task.treatBy; 
-    //  });
-
-     var presc = val.reduce(function(tr) {
-      return tr.treatBy; // return previous total plus current age
-  }, 0); // initialize age with 0 that will be passed as memo
-  
-  console.log("Sum of all developer ages is " + presc);
-     return ;
+    let val = this._diseasesArray.find(c => c.type == symptom);
+    return val.treatBy;
   }
 
   ionViewDidLoad() {

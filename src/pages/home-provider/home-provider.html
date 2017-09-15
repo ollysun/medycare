@@ -1,18 +1,34 @@
-<!--
-  Generated template for the HomeProviderPage page.
+<ion-navbar>
+  <button menuToggle side="left">
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>
+    Home Provider Page
+  </ion-title>
+</ion-navbar>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
+<ion-menu [content]="content" (ionClose)="ionClosed()" (ionOpen)="ionOpened()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Patient Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+       <button ion-item menuClose (click)="openPage(diagonisePage)">
+        Schedule
+      </button> 
+      <button ion-item menuClose (click)="openPage(historyPage)">
+        Medical History
+      </button>
+      <button ion-button menuClose (click)="logout()">
+         log out
+      </button>
+      <button ion-button menuClose>
+        Close Menu
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-  <ion-navbar>
-    <ion-title>HomeProvider</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
+<ion-nav #content [root]="rootPage" swipeBackEnabled="false"></ion-nav>

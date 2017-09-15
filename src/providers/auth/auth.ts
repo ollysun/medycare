@@ -19,10 +19,13 @@ export class AuthProvider {
 
   constructor(public http: Http,
     public afAuth: AngularFireAuth,
-    public db:AngularFireDatabase) {
+    public db: AngularFireDatabase) {
     //this.userProfileRef = firebase.database().ref('/userProfile');
     this.providerRef = db.list('/userProfile/provider');
     this.patientRef = db.list('/userProfile/patient');
+    //this.providerNameRef = firebase.database().ref(`/provider`);
+    //this.patientNameRef = firebase.database().ref(`/patient`);
+    this.getPatientName();
   }
 
   loginUser(newEmail: string, newPassword: string): firebase.Promise<any> {
@@ -87,11 +90,25 @@ export class AuthProvider {
           dateOfBirth: patient.dateOfBirth
         })
       });
-      // }, error => {
-      //   console.log(error);
-      //   console.log(error.code);
-      //   console.log(error.message);
-      // });
+    // }, error => {
+    //   console.log(error);
+    //   console.log(error.code);
+    //   console.log(error.message);
+    // });
+  }
+
+  getPatientName = function () {
+    this.patientRef.subscribe(data => {
+      console.log('data', data);
+      data.forEach(snapshot => {
+        console.log('key', snapshot.key)
+        console.log('val', snapshot.val)
+      });
+    });
+  }
+
+  getProviderName() {
+    return this.patientRef;
   }
 
 }
