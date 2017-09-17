@@ -5,6 +5,8 @@ import { IonicPage, NavController, NavParams, Nav,
   import { HistoryPage } from '../history/history';
   import { AuthProvider } from '../../providers/auth/auth';
   import { HomePage } from '../home/home';
+  import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
+
 /**
  * Generated class for the HomeProviderPage page.
  *
@@ -24,13 +26,22 @@ export class HomeProviderPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public authData: AuthProvider,    
-    public menu:MenuController,) {
+    public menu:MenuController,
+    public localstorage: LocalstorageProvider,
+    public events: Events) {
       this.rootPage = ProviderSchedulePage;
       this.historyPage = HistoryPage
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomeProviderPage');
+  }
+
+  ionOpened() {
+    this.events.publish('menu:opened', '');
+  }
+  ionClosed() {
+    this.events.publish('menu:closed', '');
   }
 
   openPage(p) {
@@ -40,6 +51,7 @@ export class HomeProviderPage {
   logout()
   {
       this.authData.logoutUser();
+      this.localstorage.clearStorage();
       this.navCtrl.setRoot(HomePage);
   }
 }

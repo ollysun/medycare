@@ -16,7 +16,6 @@ export class AuthProvider {
   public userProfileRef: firebase.database.Reference;
   private providerRef: FirebaseListObservable<any[]>;
   private patientRef: FirebaseListObservable<any[]>;
-
   constructor(public http: Http,
     public afAuth: AngularFireAuth,
     public db: AngularFireDatabase) {
@@ -99,16 +98,14 @@ export class AuthProvider {
 
   getPatientName = function () {
     this.patientRef.subscribe(data => {
-      console.log('data', data);
-      data.forEach(snapshot => {
-        console.log('key', snapshot.key)
-        console.log('val', snapshot.val)
-      });
+      return data;
     });
   }
 
-  getProviderName() {
-    return this.patientRef;
+  getProviderName = function() {
+    this.providerRef.subscribe(data => {
+      return data;
+    });  
   }
 
 }

@@ -5,14 +5,31 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>ProviderSchedule</ion-title>
+    <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Doctor Appointments</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
+
+  <ion-list>
+    <ion-item *ngFor="let schedule of schedules" (click)="itemTapped($event, schedule)">
+      <h2>{{schedule.name}}</h2>
+      <p>{{schedule.symptoms}}></p>
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-left clear small>
+        <ion-icon name="date"></ion-icon>
+        <div>schedule.dateCreated</div>
+      </button>
+          </ion-col>
+        </ion-row>
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>

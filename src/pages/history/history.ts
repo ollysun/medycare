@@ -4,6 +4,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { AuthProvider } from '../../providers/auth/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { HistoryProvider } from '../../providers/history/history';
 
 /**
  * Generated class for the HistoryPage page.
@@ -17,11 +18,19 @@ import * as firebase from 'firebase/app';
   templateUrl: 'history.html',
 })
 export class HistoryPage {
-  patientList: FirebaseListObservable<any[]>;
+  myHistoryList:any[];
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    public historyProvider: HistoryProvider) {
   }
+
+
+ getMyHistory()
+ {
+   this.myHistoryList = this.historyProvider.getDiagoniselist();
+ }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HistoryPage');

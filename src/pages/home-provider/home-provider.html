@@ -10,17 +10,14 @@
 <ion-menu [content]="content" (ionClose)="ionClosed()" (ionOpen)="ionOpened()">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Patient Menu</ion-title>
+      <ion-title>Health Provider Menu</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-list>
-       <button ion-item menuClose (click)="openPage(diagonisePage)">
+       <button ion-item menuClose (click)="openPage(schedulePage)">
         Schedule
       </button> 
-      <button ion-item menuClose (click)="openPage(historyPage)">
-        Medical History
-      </button>
       <button ion-button menuClose (click)="logout()">
          log out
       </button>

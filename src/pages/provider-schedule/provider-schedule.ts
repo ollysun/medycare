@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { ScheduleProvider } from "../../providers/schedule/schedule";
+import { ScheduleDetailsPage } from '../schedule-details/schedule-details';
 /**
  * Generated class for the ProviderSchedulePage page.
  *
@@ -13,8 +14,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'provider-schedule.html',
 })
 export class ProviderSchedulePage {
+  public schedules:any[];
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public schedule:ScheduleProvider) {
+  }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  getSchedules = function ()
+  {
+    this.schedules = this.schedule.listSchedules();
+  }
+
+  itemTapped(event, schedule) {
+    this.navCtrl.push(ScheduleDetailsPage, {
+      quote: schedule
+    });
   }
 
   ionViewDidLoad() {

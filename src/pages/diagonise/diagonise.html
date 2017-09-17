@@ -11,11 +11,6 @@
         <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Patient Diagonise</ion-title>
-    <!-- <ion-buttons start>
-      <button ion-button menuToggle="leftMenu">
-          <ion-icon	name="menu"></ion-icon>
-      </button>
-    </ion-buttons> -->
   </ion-navbar>
 
 </ion-header>
@@ -35,9 +30,6 @@
       </ion-item>
     </ion-list>
   </ion-item>
-  <!-- <ion-item>
-    <ion-input type="text" Name='symptoms' [(ngModel)]="_symptoms" placeholder="Your Symptoms" readonly="true"> </ion-input>
-  </ion-item> -->
   <ion-item>
     <ion-tags-input [type]="'text'" [color]="'secondary'" [mode]="'md'" [(ngModel)]="textItem"></ion-tags-input>
   </ion-item>
@@ -47,12 +39,12 @@
 
   <ion-item>
     <ion-label stacked>Doctor Report</ion-label>
-    <ion-input type="text" Name='diseasesType' [(ngModel)]="_diseasesType" 
+    <ion-input type="text" Name='diseasesType' [(ngModel)]="model.sicknessType" 
     placeholder="Your Diseases type" readonly="true"></ion-input>
-    <ion-textarea Name="doctorReport" [(ngModel)]="_doctorReport" 
+    <ion-textarea Name="doctorReport" [(ngModel)]="model.prescription" 
     placeholder="Details" readOnly></ion-textarea>
   </ion-item>
-  <button ion-button block type="submit">
+  <button ion-button block type="submit" onclick="saveDetails()">
       Submit
     </button>
 

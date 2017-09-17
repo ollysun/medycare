@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, Nav,
 import { DiagonisePage } from '../diagonise/diagonise';
 import { HistoryPage } from '../history/history';
 import { SchedulePage } from '../schedule/schedule';
+import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
 import { AngularFireDatabase, FirebaseListObservable }
 from 'angularfire2/database';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -31,6 +32,7 @@ export class HomePatientPage {
               public navParams: NavParams,
               public menu:MenuController,
               public authData: AuthProvider,
+              public localstorage: LocalstorageProvider,
               public events: Events) {
     this.rootPage = DiagonisePage;
     this.historyPage = HistoryPage;
@@ -62,7 +64,7 @@ export class HomePatientPage {
   {
       this.authData.logoutUser();
       this.navCtrl.setRoot(HomePage);
-      //this.navCtrl.push(PatientPage);
+      this.localstorage.clearStorage();
   }
 
 }

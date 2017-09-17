@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { RegisterPage } from '../register/register';
 import { ResetPasswordPage } from '../reset-password/reset-password';
-import { DiagonisePage } from '../diagonise/diagonise';
 import { HomePatientPage } from '../home-patient/home-patient';
+import { HomeProviderPage } from '../home-provider/home-provider';
 import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
-
 import { AngularFireDatabase, FirebaseListObservable }
   from 'angularfire2/database';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -31,26 +30,24 @@ export class HomePage {
     db: AngularFireDatabase,
     public authData: AuthProvider,
     public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController,
-    private localstorage: LocalstorageProvider) {
-      this.checkName();      
+    public localstorage:LocalstorageProvider,
+    public alertCtrl: AlertController) {
   }
 
   login() {
     console.log(this.user);
     console.log(this.user.email);
-    this.localstorage.setEmail(this.user.email);
+    //this.openPage();
     if (this.user.email === "ollysun@gmail.com") {
       this.navCtrl.setRoot(HomePatientPage);
     }
     //  if (!this.loginForm.valid) {
-    //console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     // } else {
     // this.authData.loginUser(this.user.email, this.user.password)
     //   .then(authData => {
-    //     this.navCtrl.setRoot(HomePatientPage);
-    //    // this
-    //   }, error => {
+    //    // this.openPage();
+    //    }, error => {
     //     this.loading.dismiss().then(() => {
     //       let alert = this.alertCtrl.create({
     //         message: error.message,
@@ -71,10 +68,22 @@ export class HomePage {
     // this.loading.present();
   }
 
-  checkName = function ()
-  {
+  checkPatientName = function (email): any {
     let patientArray = this.authData.getPatientName();
-    console.log(patientArray);
+    patientArray.forEach(function (item) {
+      if (item.email === email) {
+        return item.fullname;
+      }
+    });
+  }
+
+  checkProviderName = function (email) {
+    let patientArray = this.authData.getProviderName();
+    patientArray.forEach(function (item) {
+      if (item.email === email) {
+        return item.fullname;
+      }
+    });
   }
 
   goTo(page) {
@@ -91,6 +100,19 @@ export class HomePage {
     }
   }
 
-
+  openPage = function () {
+    this.localstorage.setEmail(this.user.email);
+    const patientName = this.checkPatientName(this.user.email);
+    const providerName = this.checkProviderName(this.user.email);
+    if (patientName !== null) {
+      this.navCtrl.setRoot(HomePatientPage);
+      this.localstorage.setName(patientName);
+    } else if (providerName !== null) {
+      this.navCtrl.setRoot(HomeProviderPage);
+      this.localstorage.setName(patientName);
+    } else {
+      console.log('The user doesnt exist');
+    }
+  }
 
 }

@@ -35,11 +35,21 @@ export class ProviderPage {
     public alertCtrl: AlertController) {
     this.provider = model;
     this.specialities = [
-      'medical doctor',
+      'Medical doctor',
       'Surgical Technologist',
       'Pharmacist',
-      'Dental Hygenist',
+      'Dentist',
       'Cardiology',
+      'Nurse',
+      'Physician Assistant',
+      'Registered  Pharmacist (RPh)',
+      'Registered  Dietitian (RD)',
+      'Respiratory therapist (RT)',
+      'Physical therapist (PT)',
+      'Occupational therapist (OT)',
+      'Speech therapist',
+      'Audiologist',
+      'Clinical Psychologist'
     ];
   }
 

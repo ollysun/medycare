@@ -11,6 +11,8 @@ import { Storage } from '@ionic/storage';
 */
 @Injectable()
 export class LocalstorageProvider {
+  private name:string;
+  private email:string;
 
   constructor(public http: Http,
     private storage: Storage) {
@@ -30,17 +32,30 @@ export class LocalstorageProvider {
     });
   }
 
+  setName = function (name) {
+    this.storage.set('name', name)
+  }
+
+  getName = function ():string {
+    this.storage.get('name').then(val => {
+      this.name = val;
+    });
+    return this.name
+  }
+
   //store the email address
   setEmail = function(email) {
     this.storage.set('email', email);
   }
 
   //get the stored email
-  getEmail = function() {
+  getEmail = function():string {
     this.storage.get('email').then(val => {
       console.log('email: ' + val);
-      return val;
+      this.email = val;
     });
+    return this.email;
+
   }
 
   //clear the whole local storage

@@ -55,7 +55,6 @@ export class PatientPage {
       this.authData.createPatientUser(this.patient)
       .then((success) => {
         this.navCtrl.setRoot(HomePatientPage);
-        //console.log(success);
       }, (error) => {
         this.loading.dismiss().then( () => {
           var errorMessage: string = error.message;

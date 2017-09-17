@@ -27,7 +27,11 @@ import { DiagonisePage } from '../pages/diagonise/diagonise';
 import { LocalstorageProvider } from '../providers/localstorage/localstorage';
 import { IonicStorageModule } from '@ionic/storage';
 import { DiagoniseProvider } from '../providers/diagonise/diagonise';
-
+import { HistoryProvider } from '../providers/history/history';
+import { ScheduleProvider } from '../providers/schedule/schedule';
+import { UtilityProvider } from '../providers/utility/utility';
+import { HomeProviderPage } from '../pages/home-provider/home-provider';
+import { ProviderSchedulePage } from '../pages/provider-schedule/provider-schedule';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,9 @@ import { DiagoniseProvider } from '../providers/diagonise/diagonise';
     HomePatientPage,
     HistoryPage,
     SchedulePage,
-    DiagonisePage
+    DiagonisePage,
+    HomeProviderPage,
+    ProviderSchedulePage,
   ],
   imports: [
     BrowserModule, HttpModule, ReactiveFormsModule,
@@ -62,7 +68,9 @@ import { DiagoniseProvider } from '../providers/diagonise/diagonise';
     HomePatientPage,
     HistoryPage,
     SchedulePage,
-    DiagonisePage
+    DiagonisePage,
+    HomeProviderPage,
+    ProviderSchedulePage,
   ],
   providers: [
     StatusBar,
@@ -72,7 +80,10 @@ import { DiagoniseProvider } from '../providers/diagonise/diagonise';
     AuthProvider,
     EmailComposer,
     LocalstorageProvider,
-    DiagoniseProvider
+    DiagoniseProvider,
+    HistoryProvider,
+    ScheduleProvider,
+    UtilityProvider
   ]
 })
 export class AppModule {}

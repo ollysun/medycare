@@ -10,33 +10,34 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Meet Doctor</ion-title>
+    <ion-title>Request an Appointment</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="scheduleForm" (submit)="schedule()" novalidate>
-
     <ion-item>
       <ion-label stacked>Doctor Speciality</ion-label>
-      <ion-select formControlName="speciality">
-
+      <ion-select [(ngModel)]="model.specialty" (ionChange)="onSelectChange($event)">
+        <ion-option *ngFor="let specialty of specialities" [value]="specialty">
+          {{specialty}}
+        </ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label stacked>Doctor Name</ion-label>
-      <ion-select formControlName="doctorName">
-
+      <ion-select [(ngModel)]="model.doctorName">
+          <ion-option *ngFor="let name of providerName" [value]="specialty">
+            {{name}}
+          </ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label color="primary" stacked>Tell Us how you feel</ion-label>
-      <ion-textarea formControlName="symptoms" 
-           placeholder="Your Address"></ion-textarea>
+      <ion-label color="primary" stacked>Your Symptoms</ion-label>
+      <ion-textarea [(ngModel)]="model.symptoms" placeholder="Your Symtoms in Details">
+      </ion-textarea>
     </ion-item>
-    <button ion-button block type="submit">
+    <button ion-button block type="submit" (click)="scheduleNow()">
       schedule
     </button>
-  </form>
 </ion-content>

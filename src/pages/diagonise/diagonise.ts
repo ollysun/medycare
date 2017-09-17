@@ -5,9 +5,11 @@ import {
 } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
+import { DiagoniseProvider } from '../../providers/diagonise/diagonise';
 import { EmailValidator } from '../../validators/email';
 import { AngularFireDatabase, FirebaseListObservable }
   from 'angularfire2/database';
+import { UtilityProvider } from "../../providers/utility/utility";
 import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
 
 /**
@@ -58,12 +60,13 @@ export class DiagonisePage {
     { type: 'Hepatitis B', treatBy: 'Get vaccine called Interferon-alpha from the Pharmacy' }
   ];
 
-  model: {
-    patientName:'',
-    patientEmail:'',
-    symptoms:'',
-    sicknessType:'',
-    doctorPrescription:''
+  model: any = {
+    name: '',
+    email: '',
+    symptoms: '',
+    sicknessType: '',
+    prescription: '',
+    diagoniseDate: Date
   }
 
   constructor(
@@ -74,17 +77,20 @@ export class DiagonisePage {
     public authData: AuthProvider,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    private localstorage: LocalstorageProvider
+    public diagoniseData: DiagoniseProvider,
+    private localstorage: LocalstorageProvider,
+    public utility: UtilityProvider
   ) {
     this.diagoniseForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
       tellUs: ['', Validators.compose([Validators.required])],
       doctorReport: []
     });
-
+    this.model.name = this.localstorage.getName;
+    this.model.email = this.localstorage.getEmail;
   }
 
-  initializeItems() {    
+  initializeItems() {
     this.items = [
       'headache',
       'coldness',
@@ -115,22 +121,22 @@ export class DiagonisePage {
       'dehydration',
       'hunger',
       'increased_urination',
-       'increased_thirst',
-       'weight_loss_or_gain',
-       'blurred_vision',
-       'dry_cough',
-       'conjunctivitis',
-       'runny_nose',
-       'leg_rash',
-       'hand_Rash',
-       'face_Rash',
-       'back_pain',
-       'sore_throat',
-       'chest_discomfort',
-       'cough',
-       'muscle_stiffness(leg & hand)',
-       'constipation',
-       'blurred_vision'
+      'increased_thirst',
+      'weight_loss_or_gain',
+      'blurred_vision',
+      'dry_cough',
+      'conjunctivitis',
+      'runny_nose',
+      'leg_rash',
+      'hand_Rash',
+      'face_Rash',
+      'back_pain',
+      'sore_throat',
+      'chest_discomfort',
+      'cough',
+      'muscle_stiffness(leg & hand)',
+      'constipation',
+      'blurred_vision'
     ];
   }
 
@@ -157,85 +163,53 @@ export class DiagonisePage {
       this.showList = false;
     }
   }
-  
+
   diseasesCategory = {
-    'malaria':["headache","vomiting", "weakness", "fever"],
-    'Typhoid Fever': ["poor_appetite","abdominal_pain", "high_fever","constipation"],
-    'Hepatitis A': ["feeling_tired","upset_stomach", "diarrhea", "fever", "loss_of_appetite"],
-    'Hepatitis B': ["fatigue","jaundice", "nausea","abdominal_pain","loss_of_appetite"],
-    'Diabetes': ["dehydration", "hunger", "increased_urination","increased_thirst","weight_loss_or_gain",
-                 "fatigue","vomiting","blurred_vision"],
-    'Cholera':["leg_cramps", "diarrhea","vomiting"],
+    'Malaria': ["headache", "vomiting", "weakness", "fever"],
+    'Typhoid Fever': ["poor_appetite", "abdominal_pain", "high_fever", "constipation"],
+    'Hepatitis A': ["feeling_tired", "upset_stomach", "diarrhea", "fever", "loss_of_appetite"],
+    'Hepatitis B': ["fatigue", "jaundice", "nausea", "abdominal_pain", "loss_of_appetite"],
+    'Diabetes': ["dehydration", "hunger", "increased_urination", "increased_thirst", "weight_loss_or_gain",
+      "fatigue", "vomiting", "blurred_vision"],
+    'Cholera': ["leg_cramps", "diarrhea", "vomiting"],
+    'Measles': ["dry_cough", "conjunctivitis", "runny_nose", "high_fever"],
+    'Yellow Fever': ["fever", "headache", "weakness", "nausea", "vomiting"],
+    'SmallPox': ["fever", "headache", "leg_rash", "hand_rash", "face_rash", "back_pain", "abdominal_pain"],
+    'Strep Throat': ["sore_throat", "headache", "fever", "upset_stomach"],
+    'Polio': ["sore_throat", "headache", "muscle_stiffness(leg & hand)", "malaise"],
+    'Flu': ["chest_disconfort", "cough", "sneezing", "headache", "sore_throat"],
+    'Mumps': ["fever", "muscle_ache", "malaise", "low_appetite", "headache"],
   };
 
-  check = function(symptomType)
-  {
+  check = function (symptomType) {
     symptomType.sort();
-      for (let key in this.diseasesCategory) {
-        const keyV = this.diseasesCategory[key].sort();
-        if (symptomType.join(',') === keyV.join(','))
-        {
-          return key;
-        }else{
-          console.log('key ' + false);
-        }
-      }
-  }
-  getDiseasesType = function (symptomType) {
-    //var response: string = 'initial';
-    this.check(symptomType);    
-    for (let type of symptomType) {
-      switch (type.trim()) {
-        case 'dry_cough' && 'conjunctivitis' && 'runny_nose' && 'high_fever':
-          this.response = 'Measles';
-          break;
-        case 'fever' && 'headache' && 'weakness' && 'Nausea' && 'vomitting':
-          this.response = 'Yellow Fever';
-          break;
-        case 'fever' && 'headache' && 'leg_rash' && 'hand_Rash' && 'face_Rash' && 'abdominal_pain'
-          && 'back_pain':
-          this.response = 'SmallPox';
-          break;
-        case 'sore_throat' && 'headache' && 'fever' && 'upset_stomach':
-          this.response = 'Strep Throat';
-          break;
-        case 'sore_throat' && 'headache' && 'muscle_stiffness(leg & hand)' && 'malaise':
-          this.response = 'Polio';
-          break;
-        case 'chest_discomfort' && 'cough' && 'sneezing' && 'headache' && 'sore_throat':
-          this.response = 'Flu';
-          break;
-        case 'fever' && 'muscle_ache' && 'malaise' && 'low_appetite' && 'headache':
-          this.response = 'Mumps';
-          break;
-        default:
-          this.response = 'false';
+    for (let key in this.diseasesCategory) {
+      const keyV = this.diseasesCategory[key].sort();
+      if (symptomType.join(',') === keyV.join(',')) {
+        return key;
+      } else {
+        this.utility.presentToast(key);
+        console.log('key ' + false);
       }
     }
-    // symptomType.forEach(function (type) {
-    //   if (type == 'headache' && type == 'body weakness'
-    //     || type == 'sneezing') {
-    //     this.response = 'Malaria Fever';
-    //   } else {
-    //     this.response = 'false';
-    //   }
-    // });
-    //return this.response;
   }
+
 
   itemTapped(event, item) {
     this.textItem.push(item);
-    this._symptoms = this.textItem.join();
   }
 
   prescribe = function () {
     this.response = this.check(this.textItem);
-    if (this.response === false)
-    {
-        
+    this.model.symptoms = this.textItem.join(',');
+    console.log('any false response ', this.response);
+    this.model.diagoniseDate = new Date();
+    if (this.response === false) {
+      this.model.sicknessType = "Sickness Not listed on the platform";
+      this.model.prescription = "Please schedule appointment with the Dcotor";
     }
-    this._diseasesType = 'You are having ' + this.response;
-    this._doctorReport = this.getSicknessType(this.response);
+    this.model.sicknessType = 'You are having ' + this.response;
+    this.model.prescription = this.getSicknessType(this.response);
   }
 
   getSicknessType(symptom: string): string {
@@ -247,9 +221,15 @@ export class DiagonisePage {
     console.log('ionViewDidLoad DiagonisePage');
   }
 
-  diagonise() {
-
-
+  saveDetails = function () {
+    this.diagoniseData.createDiagonise(this.model)
+      .then(newDiagonise => {
+        this.textItem = [];
+        this.model = {};
+      }, error => {
+        console.log('Diagonise error data ' + error);
+        this.utility.presentAlert('Diagonise Error', error);
+      });
   }
 
 }
