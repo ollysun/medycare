@@ -24,8 +24,8 @@ import { HomePatientPage } from '../pages/home-patient/home-patient';
 import { HistoryPage } from '../pages/history/history';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { DiagonisePage } from '../pages/diagonise/diagonise';
-import { LocalstorageProvider } from '../providers/localstorage/localstorage';
 import { IonicStorageModule } from '@ionic/storage';
+import { LocalstorageProvider } from '../providers/localstorage/localstorage';
 import { DiagoniseProvider } from '../providers/diagonise/diagonise';
 import { HistoryProvider } from '../providers/history/history';
 import { ScheduleProvider } from '../providers/schedule/schedule';
@@ -55,7 +55,7 @@ import { ProviderSchedulePage } from '../pages/provider-schedule/provider-schedu
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

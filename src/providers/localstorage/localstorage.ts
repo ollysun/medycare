@@ -11,17 +11,16 @@ import { Storage } from '@ionic/storage';
 */
 @Injectable()
 export class LocalstorageProvider {
-  private name:string;
-  private email:string;
+  public name:any;
+  public email:any;
 
   constructor(public http: Http,
-    private storage: Storage) {
-    console.log('Hello LocalstorageProvider Provider');
+    public storage: Storage) {
   }
 
   setPhone = function (phone)
   {
-    this.storage.set('phone', phone)
+    this.storage.set('phone', phone);
   }
 
   getPhone = function()
@@ -33,12 +32,14 @@ export class LocalstorageProvider {
   }
 
   setName = function (name) {
-    this.storage.set('name', name)
+  //  this.storage.set('name', JSON.stringify(name));
+    this.storage.set('name', name);
+    console.log(name);
   }
 
   getName = function ():string {
     this.storage.get('name').then(val => {
-      this.name = val;
+        this.name = val;    
     });
     return this.name
   }
@@ -51,11 +52,9 @@ export class LocalstorageProvider {
   //get the stored email
   getEmail = function():string {
     this.storage.get('email').then(val => {
-      console.log('email: ' + val);
-      this.email = val;
+        this.email = val;
     });
     return this.email;
-
   }
 
   //clear the whole local storage

@@ -86,8 +86,9 @@ export class DiagonisePage {
       tellUs: ['', Validators.compose([Validators.required])],
       doctorReport: []
     });
-    this.model.name = this.localstorage.getName;
-    this.model.email = this.localstorage.getEmail;
+    this.model.name = this.localstorage.getName();
+    this.model.email = this.localstorage.getEmail();
+    console.log('model ',this.model);
   }
 
   initializeItems() {

@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import {
+  AngularFireDatabase, FirebaseListObservable
+} from 'angularfire2/database';
 import firebase from 'firebase/app';
 
 /*
@@ -16,15 +18,19 @@ export class AuthProvider {
   public userProfileRef: firebase.database.Reference;
   private providerRef: FirebaseListObservable<any[]>;
   private patientRef: FirebaseListObservable<any[]>;
+  ptobj:any;
+  pdobj:any;
   constructor(public http: Http,
     public afAuth: AngularFireAuth,
     public db: AngularFireDatabase) {
-    //this.userProfileRef = firebase.database().ref('/userProfile');
     this.providerRef = db.list('/userProfile/provider');
     this.patientRef = db.list('/userProfile/patient');
-    //this.providerNameRef = firebase.database().ref(`/provider`);
-    //this.patientNameRef = firebase.database().ref(`/patient`);
-    this.getPatientName();
+    this.patientRef.subscribe(data => {
+     this.ptobj = data;
+    });
+    this.providerRef.subscribe(data => {
+      this.pdobj = data;      
+    });
   }
 
   loginUser(newEmail: string, newPassword: string): firebase.Promise<any> {
@@ -96,16 +102,41 @@ export class AuthProvider {
     // });
   }
 
-  getPatientName = function () {
-    this.patientRef.subscribe(data => {
-      return data;
-    });
+  getPatientName = function (email):string {
+    var nameobj:any;
+    var name:string;
+    if (this.ptobj !== undefined)
+    {
+      nameobj = this.ptobj.find(c => c.email === email); 
+      if (nameobj !== undefined)
+      {
+         name = nameobj.fullname;
+      }else{
+          name = null;
+      }      
+    }else{
+      name = null;
+    }
+    return name;
   }
 
-  getProviderName = function() {
-    this.providerRef.subscribe(data => {
-      return data;
-    });  
+  getProviderName = function (email): string {
+    var nameobj:any;   
+    var name:string;
+    if (this.pdobj !== undefined)
+    {
+      nameobj = this.ptobj.find(c => c.email === email);  
+      if (nameobj !== undefined)
+      {
+        name = nameobj.fullname;
+      }else {
+        name = null;
+      }
+    }else{
+     name = null;
+    }
+
+    return name;
   }
 
 }

@@ -33,7 +33,7 @@
   <ion-item>
     <ion-tags-input [type]="'text'" [color]="'secondary'" [mode]="'md'" [(ngModel)]="textItem"></ion-tags-input>
   </ion-item>
-  <button ion-button block type="submit" (click)='prescribe()'>
+  <button ion-button block type="submit" (click)="prescribe()">
       Prescription
     </button>
 
@@ -44,7 +44,7 @@
     <ion-textarea Name="doctorReport" [(ngModel)]="model.prescription" 
     placeholder="Details" readOnly></ion-textarea>
   </ion-item>
-  <button ion-button block type="submit" onclick="saveDetails()">
+  <button ion-button block type="submit" (click)="saveDetails()">
       Submit
     </button>
 

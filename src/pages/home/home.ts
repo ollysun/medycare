@@ -13,6 +13,7 @@ import {
   Loading,
   AlertController, NavParams
 } from 'ionic-angular';
+import { UtilityProvider } from '../../providers/utility/utility';
 
 @IonicPage()
 @Component({
@@ -30,7 +31,8 @@ export class HomePage {
     db: AngularFireDatabase,
     public authData: AuthProvider,
     public loadingCtrl: LoadingController,
-    public localstorage:LocalstorageProvider,
+    public localstorage: LocalstorageProvider,
+    public utility: UtilityProvider,
     public alertCtrl: AlertController) {
   }
 
@@ -38,52 +40,34 @@ export class HomePage {
     console.log(this.user);
     console.log(this.user.email);
     //this.openPage();
-    if (this.user.email === "ollysun@gmail.com") {
-      this.navCtrl.setRoot(HomePatientPage);
-    }
-    //  if (!this.loginForm.valid) {
-    // console.log(this.loginForm.value);
-    // } else {
-    // this.authData.loginUser(this.user.email, this.user.password)
-    //   .then(authData => {
-    //    // this.openPage();
-    //    }, error => {
-    //     this.loading.dismiss().then(() => {
-    //       let alert = this.alertCtrl.create({
-    //         message: error.message,
-    //         buttons: [
-    //           {
-    //             text: "Ok",
-    //             role: 'cancel'
-    //           }
-    //         ]
-    //       });
-    //       alert.present();
-    //     });
-    //   });
-
-    // this.loading = this.loadingCtrl.create({
-    //   dismissOnPageChange: true,
-    // });
-    // this.loading.present();
+    // if (this.user.email === "ollysun@gmail.com") {
+    //   this.navCtrl.setRoot(HomePatientPage);
+    // }
+    this.authData.loginUser(this.user.email, this.user.password)
+      .then(authData => {
+        this.openPage();
+      }, error => {
+        var message = error.message;
+        this.utility.presentAlert('login error', message);
+      });
   }
 
-  checkPatientName = function (email): any {
-    let patientArray = this.authData.getPatientName();
-    patientArray.forEach(function (item) {
-      if (item.email === email) {
-        return item.fullname;
-      }
-    });
+  checkPatientName = function (email): string {
+    let patientName = this.authData.getPatientName(this.user.email);
+    if (patientName !== null) {
+      return patientName;
+    } else {
+      return null;
+    }
   }
 
   checkProviderName = function (email) {
-    let patientArray = this.authData.getProviderName();
-    patientArray.forEach(function (item) {
-      if (item.email === email) {
-        return item.fullname;
-      }
-    });
+    let providerName = this.authData.getProviderName(this.user.email);
+    if (providerName !== null) {
+      return providerName;
+    } else {
+      return null;
+    }
   }
 
   goTo(page) {
@@ -105,13 +89,14 @@ export class HomePage {
     const patientName = this.checkPatientName(this.user.email);
     const providerName = this.checkProviderName(this.user.email);
     if (patientName !== null) {
+      this.localstorage.setName(patientName);      
       this.navCtrl.setRoot(HomePatientPage);
-      this.localstorage.setName(patientName);
     } else if (providerName !== null) {
+      this.localstorage.setName(providerName);      
       this.navCtrl.setRoot(HomeProviderPage);
-      this.localstorage.setName(patientName);
     } else {
-      console.log('The user doesnt exist');
+      this.navCtrl.setRoot(HomePage);      
+      this.utility.presentAlert('login', 'The user doesnt exist. Kindly signUp');      
     }
   }
 
