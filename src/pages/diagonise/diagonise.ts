@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {
   IonicPage, NavController, NavParams,
-  AlertController, LoadingController, Loading,
+  AlertController, LoadingController, Loading,Events
 } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -32,6 +32,7 @@ export class DiagonisePage {
   response: string = 'initial';
   _symptoms: string;
   tags = [];
+  modelEvent:any;
   diagoniseList: FirebaseListObservable<any[]>;
   _diseasesType: string;
   _doctorReport: string;
@@ -79,16 +80,20 @@ export class DiagonisePage {
     public alertCtrl: AlertController,
     public diagoniseData: DiagoniseProvider,
     private localstorage: LocalstorageProvider,
-    public utility: UtilityProvider
+    public utility: UtilityProvider,
+    public events: Events
   ) {
     this.diagoniseForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
       tellUs: ['', Validators.compose([Validators.required])],
       doctorReport: []
     });
+    this.getEvent();
+    let email = navParams.get('email');
+    let name = navParams.get('name');
+    console.log('diagonise email ', this.modelEvent);
     this.model.name = this.localstorage.getName();
     this.model.email = this.localstorage.getEmail();
-    console.log('model ',this.model);
   }
 
   initializeItems() {
@@ -193,6 +198,14 @@ export class DiagonisePage {
         console.log('key ' + false);
       }
     }
+  }
+
+  getEvent=function()
+  {
+    this.events.subscribe('navobj', (obj) => {
+      // user and time are the same arguments passed in `events.publish(user, time)`
+      this.modelEvent = obj;
+    });
   }
 
 

@@ -89,11 +89,11 @@ export class HomePage {
     const patientName = this.checkPatientName(this.user.email);
     const providerName = this.checkProviderName(this.user.email);
     if (patientName !== null) {
-      this.localstorage.setName(patientName);      
-      this.navCtrl.setRoot(HomePatientPage);
+      this.localstorage.setName(patientName); 
+      this.navCtrl.setRoot(HomePatientPage, {name:patientName, email:this.user.email});
     } else if (providerName !== null) {
       this.localstorage.setName(providerName);      
-      this.navCtrl.setRoot(HomeProviderPage);
+      this.navCtrl.setRoot(HomeProviderPage, {name:providerName, email:this.user.email});
     } else {
       this.navCtrl.setRoot(HomePage);      
       this.utility.presentAlert('login', 'The user doesnt exist. Kindly signUp');      

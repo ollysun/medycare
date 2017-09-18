@@ -62,7 +62,7 @@ export class ScheduleProvider {
   }
 
   updateSchedule(schedule) {
-    const scheduleObservable = this.db.object('/userProfile/patient/schedule/' + this.name);
+    const scheduleObservable = this.db.object('/schedule/' + this.name);
     scheduleObservable.update({
       name: this.name,
       speciality: schedule.speciality,

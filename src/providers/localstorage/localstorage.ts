@@ -37,7 +37,7 @@ export class LocalstorageProvider {
     console.log(name);
   }
 
-  getName = function ():string {
+  getName = function ():any {
     this.storage.get('name').then(val => {
         this.name = val;    
     });
@@ -47,14 +47,19 @@ export class LocalstorageProvider {
   //store the email address
   setEmail = function(email) {
     this.storage.set('email', email);
+    console.log('set email', email);
   }
 
   //get the stored email
-  getEmail = function():string {
-    this.storage.get('email').then(val => {
-        this.email = val;
+  getEmail = function():any {
+    this.storage.get('email').then(function(val){
+        //this.email = val;
+        console.log('local email ', val);       
+        //return val;
+    }, function(err) {
+      console.log(err); // Error: "It broke"
     });
-    return this.email;
+    //return this.email;
   }
 
   //clear the whole local storage

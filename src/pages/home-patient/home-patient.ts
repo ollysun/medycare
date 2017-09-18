@@ -1,12 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Nav, 
-         MenuController, Events } from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams, Nav,
+  MenuController, Events
+} from 'ionic-angular';
 import { DiagonisePage } from '../diagonise/diagonise';
 import { HistoryPage } from '../history/history';
 import { SchedulePage } from '../schedule/schedule';
 import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
 import { AngularFireDatabase, FirebaseListObservable }
-from 'angularfire2/database';
+  from 'angularfire2/database';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
 
@@ -22,22 +24,33 @@ import { HomePage } from '../home/home';
   templateUrl: 'home-patient.html',
 })
 export class HomePatientPage {
+  //@ViewChild(Nav) nav: Nav;
   @ViewChild(DiagonisePage) dpage: DiagonisePage;
   rootPage: any = this;
   private diagonisePage;
   private historyPage;
-  private schedulePage; 
+  private schedulePage;
+  private navobj = {
+    name: '',
+    email: ''
+  };
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
-              public menu:MenuController,
-              public authData: AuthProvider,
-              public localstorage: LocalstorageProvider,
-              public events: Events) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public menu: MenuController,
+    public authData: AuthProvider,
+    public localstorage: LocalstorageProvider,
+    public events: Events) {
     this.rootPage = DiagonisePage;
     this.historyPage = HistoryPage;
     this.schedulePage = SchedulePage;
     this.diagonisePage = DiagonisePage;
+    this.navobj.name = navParams.get('name');
+    this.navobj.email = navParams.get('email');
+  }
+
+  createEvent() {
+    this.events.publish('navobj', this.navobj);
   }
 
   ionViewDidLoad() {
@@ -58,13 +71,13 @@ export class HomePatientPage {
 
   openPage(p) {
     this.rootPage = p;
+    this.createEvent();
   }
 
-  logout()
-  {
-      this.authData.logoutUser();
-      this.navCtrl.setRoot(HomePage);
-      this.localstorage.clearStorage();
+  logout() {
+    this.authData.logoutUser();
+    this.navCtrl.setRoot(HomePage);
+    this.localstorage.clearStorage();
   }
 
 }
