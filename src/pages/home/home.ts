@@ -90,13 +90,13 @@ export class HomePage {
     const providerName = this.checkProviderName(this.user.email);
     if (patientName !== null) {
       this.localstorage.setName(patientName); 
-      this.navCtrl.setRoot(HomePatientPage, {name:patientName, email:this.user.email});
+      this.navCtrl.setRoot(HomePatientPage);
     } else if (providerName !== null) {
       this.localstorage.setName(providerName);      
-      this.navCtrl.setRoot(HomeProviderPage, {name:providerName, email:this.user.email});
+      this.navCtrl.setRoot(HomeProviderPage);
     } else {
       this.navCtrl.setRoot(HomePage);      
-      this.utility.presentAlert('login', 'The user doesnt exist. Kindly signUp');      
+      this.utility.presentAlert('login', 'The user doesnt exist.Kindly signUp');      
     }
   }
 

@@ -29,7 +29,7 @@ export class DiagoniseProvider {
     public utility: UtilityProvider,
     public db: AngularFireDatabase) {
     this.name = localstore.getName();
-    this.diagoniseRef = db.list('/userProfile/patient/diagonise/' + this.name);
+    this.diagoniseRef = db.list('/userProfile/diagonise');
   }
 
   createDiagonise = function (diagonise) {

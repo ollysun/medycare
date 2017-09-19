@@ -88,12 +88,9 @@ export class DiagonisePage {
       tellUs: ['', Validators.compose([Validators.required])],
       doctorReport: []
     });
-    this.getEvent();
-    let email = navParams.get('email');
-    let name = navParams.get('name');
-    console.log('diagonise email ', this.modelEvent);
     this.model.name = this.localstorage.getName();
     this.model.email = this.localstorage.getEmail();
+    console.log('diagonise model ', this.model);    
   }
 
   initializeItems() {
@@ -202,9 +199,10 @@ export class DiagonisePage {
 
   getEvent=function()
   {
-    this.events.subscribe('navobj', (obj) => {
+    this.events.subscribe('navobj', (navobj) => {
       // user and time are the same arguments passed in `events.publish(user, time)`
-      this.modelEvent = obj;
+      console.log('obj', navobj)
+      this.modelEvent = navobj;
     });
   }
 

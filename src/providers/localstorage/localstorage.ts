@@ -13,9 +13,14 @@ import { Storage } from '@ionic/storage';
 export class LocalstorageProvider {
   public name:any;
   public email:any;
+  public localstorage:any;
+  public sessionStorage:any;
+
 
   constructor(public http: Http,
     public storage: Storage) {
+      this.localstorage = window.localStorage;
+      this.sessionStorage = window.sessionStorage;
   }
 
   setPhone = function (phone)
@@ -34,15 +39,19 @@ export class LocalstorageProvider {
   setName = function (name) {
   //  this.storage.set('name', JSON.stringify(name));
     this.storage.set('name', name);
-    console.log(name);
+    console.log('name set',name);
   }
 
   getName = function ():any {
     this.storage.get('name').then(val => {
         this.name = val;    
+        return this.name;        
     });
-    return this.name
+    //this.name = this.storage.get('name');
+    //console.log('name get ', this.name);
+    //return this.name;
   }
+
 
   //store the email address
   setEmail = function(email) {
@@ -59,7 +68,9 @@ export class LocalstorageProvider {
     }, function(err) {
       console.log(err); // Error: "It broke"
     });
-    //return this.email;
+    console.log('email', this.storage.get('email'));    
+    return this.email;
+
   }
 
   //clear the whole local storage
