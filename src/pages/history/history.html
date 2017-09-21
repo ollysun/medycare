@@ -16,26 +16,9 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card [virtualScroll]="myHistoryList">
-    <ion-item *virtualItem="let item">
-      <h2>item.name</h2>
-      <p>item.diagoniseDate</p>
-    </ion-item>
-    <ion-card-content *virtualItem="let item">
-      <div><strong>Your symptoms: </strong><br/> item.symptoms
-      </div>
-      <p>
-        <strong>Doctor Prescription</strong><br> 
-        item.prescription
-      </p>
-    </ion-card-content>
-    <ion-row *virtualItem="let item">
-      <ion-col>
-        <button ion-button icon-left clear small>
-        <ion-icon name="email"></ion-icon>
-        <div>item.email</div>
-      </button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
+  <ion-list>
+      <ion-item *ngFor="let item of myHistoryList" (click)="itemSelected(item)">
+          <h2>{{ item.sicknessType }}</h2>
+        </ion-item>
+  </ion-list>
 </ion-content>

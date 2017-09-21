@@ -36,6 +36,7 @@ export class DiagonisePage {
   diagoniseList: FirebaseListObservable<any[]>;
   _diseasesType: string;
   _doctorReport: string;
+  userlist:any;
   _diseasesArray: any = [
     { type: 'Malaria', treatBy: 'Go to Pharmacy, Get Chloroquine or quinine or Coartem' },
     {
@@ -88,9 +89,8 @@ export class DiagonisePage {
       tellUs: ['', Validators.compose([Validators.required])],
       doctorReport: []
     });
-    this.model.name = this.localstorage.getName();
-    this.model.email = this.localstorage.getEmail();
-    console.log('diagonise model ', this.model);    
+    this.model.name = this.authData.getCurrentUserName();
+    this.model.email = this.authData.getcurrentUserEmail();
   }
 
   initializeItems() {
@@ -197,15 +197,6 @@ export class DiagonisePage {
     }
   }
 
-  getEvent=function()
-  {
-    this.events.subscribe('navobj', (navobj) => {
-      // user and time are the same arguments passed in `events.publish(user, time)`
-      console.log('obj', navobj)
-      this.modelEvent = navobj;
-    });
-  }
-
 
   itemTapped(event, item) {
     this.textItem.push(item);
@@ -234,12 +225,11 @@ export class DiagonisePage {
   }
 
   saveDetails = function () {
-    this.diagoniseData.createDiagonise(this.model)
-      .then(newDiagonise => {
+    this.diagoniseData.createDiagonise(this.model).then(newDiagonise => {
         this.textItem = [];
         this.model = {};
+        this.utility.presentAlert('Diagonise', 'Succesful Diagonise');        
       }, error => {
-        console.log('Diagonise error data ' + error);
         this.utility.presentAlert('Diagonise Error', error);
       });
   }

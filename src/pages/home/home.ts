@@ -39,10 +39,6 @@ export class HomePage {
   login() {
     console.log(this.user);
     console.log(this.user.email);
-    //this.openPage();
-    // if (this.user.email === "ollysun@gmail.com") {
-    //   this.navCtrl.setRoot(HomePatientPage);
-    // }
     this.authData.loginUser(this.user.email, this.user.password)
       .then(authData => {
         this.openPage();
@@ -84,15 +80,15 @@ export class HomePage {
     }
   }
 
+  
+
   openPage = function () {
     this.localstorage.setEmail(this.user.email);
     const patientName = this.checkPatientName(this.user.email);
     const providerName = this.checkProviderName(this.user.email);
     if (patientName !== null) {
-      this.localstorage.setName(patientName); 
       this.navCtrl.setRoot(HomePatientPage);
     } else if (providerName !== null) {
-      this.localstorage.setName(providerName);      
       this.navCtrl.setRoot(HomeProviderPage);
     } else {
       this.navCtrl.setRoot(HomePage);      

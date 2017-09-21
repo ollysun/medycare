@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { SQLite } from 'ionic-native'
 
 /*
   Generated class for the LocalstorageProvider provider.
@@ -11,70 +12,62 @@ import { Storage } from '@ionic/storage';
 */
 @Injectable()
 export class LocalstorageProvider {
-  public name:any;
-  public email:any;
-  public localstorage:any;
-  public sessionStorage:any;
-
+  public name: any;
+  public email: any;
+  public localstorage: any;
+  public sessionStorage: any;
+  public db: SQLite;
+  public data:any = {
+    name:'',
+    email:''
+  };
 
   constructor(public http: Http,
     public storage: Storage) {
-      this.localstorage = window.localStorage;
-      this.sessionStorage = window.sessionStorage;
   }
 
-  setPhone = function (phone)
-  {
+  setPhone = function (phone) {
     this.storage.set('phone', phone);
   }
 
-  getPhone = function()
-  {
+  getPhone = function () {
     this.storage.get('phone').then(val => {
       console.log('phone: ' + val);
       return val;
     });
   }
 
-  setName = function (name) {
-  //  this.storage.set('name', JSON.stringify(name));
+  setName = function (name:string) {
     this.storage.set('name', name);
-    console.log('name set',name);
   }
 
-  getName = function ():any {
-    this.storage.get('name').then(val => {
-        this.name = val;    
-        return this.name;        
+  getName = function (): any {
+    this.storage.get('name').then((val) => {
+      this.data.name = val;
+      console.log('val', this.data.name);
     });
-    //this.name = this.storage.get('name');
-    //console.log('name get ', this.name);
-    //return this.name;
+    console.log('local name ', this.data.name);
   }
 
 
   //store the email address
-  setEmail = function(email) {
+  setEmail = function (email:string) {
     this.storage.set('email', email);
-    console.log('set email', email);
   }
 
   //get the stored email
-  getEmail = function():any {
-    this.storage.get('email').then(function(val){
-        //this.email = val;
-        console.log('local email ', val);       
-        //return val;
-    }, function(err) {
-      console.log(err); // Error: "It broke"
+  getEmail = function (): any {
+    this.storage.get('email').then((val) => {
+      this.data.email = val;
+      console.log('email val', this.data.email);
     });
-    console.log('email', this.storage.get('email'));    
+    console.log('get email', this.data.email);
     return this.email;
 
   }
 
   //clear the whole local storage
-  clearStorage = function() {
+  clearStorage = function () {
     this.storage.clear().then(() => {
       console.log('all keys are cleared');
     });

@@ -13,7 +13,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'schedule-details.html',
 })
 export class ScheduleDetailsPage {
-  scheduleDetails: {
+  scheduleDetails = {
     name: '',
     speciality: '',
     doctorName: '',

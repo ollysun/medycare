@@ -81,8 +81,9 @@ export class AuthProvider {
 
   createPatientUser = function (patient): firebase.Promise<any> {
     return this.afAuth.auth.createUserWithEmailAndPassword(patient.email, patient.password)
-      .then(newUser => {
+      .then(user => {
         this.patientRef.push({
+          userId :user.uid,
           fullname: patient.fullname,
           email: patient.email,
           password: patient.password,
@@ -137,6 +138,43 @@ export class AuthProvider {
     }
 
     return name;
+  }
+
+  getcurrentUserEmail():string
+  {
+    return this.afAuth.auth.currentUser.email;
+  }
+
+  checkPatientName = function (email): string {
+    let patientName = this.getPatientName(email);
+    if (patientName !== null) {
+      return patientName;
+    } else {
+      return null;
+    }
+  }
+
+  checkProviderName = function (email) {
+    let providerName = this.getProviderName(email);
+    if (providerName !== null) {
+      return providerName;
+    } else {
+      return null;
+    }
+  }
+
+  getCurrentUserName():string
+  {
+    let modelName;
+    const modelEmail = this.getcurrentUserEmail();
+    if (this.checkPatientName(modelEmail) !== null)
+    {
+      modelName = this.checkPatientName(modelEmail);
+    }else if(this.checkProviderName(modelEmail) !== null)
+    {
+      modelName = this.checkProviderName(modelEmail);
+    }
+    return modelName;
   }
 
 }

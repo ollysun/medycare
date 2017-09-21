@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import firebase from 'firebase/app';
-import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
+import { AuthProvider } from '../../providers/auth/auth';
 import { UtilityProvider } from '../../providers/utility/utility';
 
 /*
@@ -15,30 +13,36 @@ import { UtilityProvider } from '../../providers/utility/utility';
 */
 @Injectable()
 export class HistoryProvider {
-  private historyRef: FirebaseListObservable<any[]>;
   private diagoniseRef: FirebaseListObservable<any[]>;
-  private name: string;
+  diagoniseData: any;
+  returnObj = [];  
 
   constructor(public http: Http,
-              public db: AngularFireDatabase,
-              public localstore:LocalstorageProvider,
-              public utility:UtilityProvider ) {
-    this.name = localstore.getName();
-    this.diagoniseRef = db.list('/userProfile/patient/diagonise/' + this.name);
+    public db: AngularFireDatabase,
+    public af: AuthProvider,
+    public utility: UtilityProvider) {
+    this.diagoniseRef = db.list('/userProfile/diagonise');
+    this.diagoniseRef.subscribe(data => {
+      this.diagoniseData = data;
+    });
+    this.getDiagoniselist();
+    console.log('list ', this.getDiagoniselist());
   }
 
-  getDiagoniselist = function (): any[] {
-    let name: string[];
-    this.providerRef.subscribe(data => {
-      // data.forEach(function (item) {
-      //   if (item.specialty === specialty) {
-      //     name.push[item.fullname];
-      //   }
-      // });
-      //name.push[]
-      name = data;
-    });
-    return name;
+  getDiagoniselist = function (): any {
+    var dataobj: any;
+    var name: string = this.af.getCurrentUserName();
+    if (this.diagoniseData !== undefined) {
+      dataobj = this.diagoniseData.find(c => c.name === name);
+      if (dataobj !== undefined) {
+        this.returnObj.push(dataobj);
+        return this.returnObj;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 
 }

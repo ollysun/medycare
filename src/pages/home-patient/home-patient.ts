@@ -45,12 +45,6 @@ export class HomePatientPage {
     this.historyPage = HistoryPage;
     this.schedulePage = SchedulePage;
     this.diagonisePage = DiagonisePage;
-    this.navobj.name = navParams.get('name');
-    this.navobj.email = navParams.get('email');
-  }
-
-  createEvent() {
-    this.events.publish('navobj', this.navobj);
   }
 
   ionViewDidLoad() {
@@ -71,13 +65,11 @@ export class HomePatientPage {
 
   openPage(p) {
     this.rootPage = p;
-    this.createEvent();
   }
 
   logout() {
     this.authData.logoutUser();
     this.navCtrl.setRoot(HomePage);
-    this.localstorage.clearStorage();
   }
 
 }

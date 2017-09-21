@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { AuthProvider } from '../../providers/auth/auth';
-import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
 import { HistoryProvider } from '../../providers/history/history';
+import { HistoryDetailPage } from '../history-detail/history-detail';
 
 /**
  * Generated class for the HistoryPage page.
@@ -24,12 +21,20 @@ export class HistoryPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public historyProvider: HistoryProvider) {
+      this.getMyHistory();
   }
 
 
  getMyHistory()
  {
    this.myHistoryList = this.historyProvider.getDiagoniselist();
+ }
+
+ itemSelected(historyParam)
+ {
+  this.navCtrl.push(HistoryDetailPage, {
+    history: historyParam
+  });
  }
 
   ionViewDidLoad() {
