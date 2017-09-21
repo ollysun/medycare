@@ -20,10 +20,9 @@ export class HistoryDetailPage {
     sicknessType:'',
     symptoms:''
   };
-
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.historyDetail = navParams.get('schedule');
-    console.log(this.historyDetail);
+    this.historyDetail = navParams.get('history');
+    console.log('history ', this.historyDetail);
   }
 
   ionViewDidLoad() {

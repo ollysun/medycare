@@ -32,6 +32,7 @@ import { ScheduleProvider } from '../providers/schedule/schedule';
 import { UtilityProvider } from '../providers/utility/utility';
 import { HomeProviderPage } from '../pages/home-provider/home-provider';
 import { ProviderSchedulePage } from '../pages/provider-schedule/provider-schedule';
+import { HistoryDetailPage } from '../pages/history-detail/history-detail';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ProviderSchedulePage } from '../pages/provider-schedule/provider-schedu
     DiagonisePage,
     HomeProviderPage,
     ProviderSchedulePage,
+    HistoryDetailPage,
   ],
   imports: [
     BrowserModule, HttpModule, ReactiveFormsModule,
@@ -71,6 +73,7 @@ import { ProviderSchedulePage } from '../pages/provider-schedule/provider-schedu
     DiagonisePage,
     HomeProviderPage,
     ProviderSchedulePage,
+    HistoryDetailPage,
   ],
   providers: [
     StatusBar,
