@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { ScheduleProvider } from "../../providers/schedule/schedule";
 import { UtilityProvider } from "../../providers/utility/utility";
 import { AuthProvider } from '../../providers/auth/auth';
+import { DiagonisePage } from '../diagonise/diagonise';
 
 /**
  * Generated class for the SchedulePage page.
@@ -71,6 +72,6 @@ export class SchedulePage {
   scheduleNow = function () {
      this.model.dateCreated = new Date();
       this.scheduleProvider.schedule(this.model);
-      this.model = null;
+      this.navCtrl.setRoot(DiagonisePage);      
   }
 }
