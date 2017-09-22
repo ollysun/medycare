@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
 import { UtilityProvider } from '../../providers/utility/utility';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /*
   Generated class for the ScheduleProvider provider.
@@ -14,17 +15,15 @@ import { UtilityProvider } from '../../providers/utility/utility';
 */
 @Injectable()
 export class ScheduleProvider {
-  private providerRef: FirebaseListObservable<any[]>;
-  private scheduleRef: FirebaseObjectObservable<any>;
+  private scheduleRef: FirebaseListObservable<any[]>;
   private name: string;
   constructor(public http: Http,
     public afAuth: AngularFireAuth,
     public localstore: LocalstorageProvider,
     public utility: UtilityProvider,
+    public af:AuthProvider,
     public db: AngularFireDatabase) {
-    this.name = localstore.getName();
-    this.providerRef = db.list('/userProfile/provider');
-    this.scheduleRef = db.object('/userProfile/patient/schedule/' + this.name);
+    this.scheduleRef = db.list('/userProfile/schedule/');
   }
 
   getProviderName = function (specialty): string[] {
@@ -40,9 +39,10 @@ export class ScheduleProvider {
   }
 
   schedule = function (scheduleModel) {
-    this.scheduleRef.set({
-      name: this.name,
-      speciality: scheduleModel.speciality,
+    this.name = this.af.getCurrentUserName();    
+    this.scheduleRef.push({
+      patientName: this.name,
+      specialty: scheduleModel.specialty,
       doctorName: scheduleModel.doctorName,
       symptoms: scheduleModel.symptoms,
       dateCreated: scheduleModel.dateCreated,
@@ -51,7 +51,7 @@ export class ScheduleProvider {
       this.utility.presentAlert('Schedule', 'Schedule Successfully Created');
     }, (error) => {
       var errorMessage: string = error.message;
-      this.utility.presentAlert('Schedule', errorMessage);
+      this.utility.presentAlert('Schedule Error', errorMessage);
     });
   }
 
@@ -62,11 +62,11 @@ export class ScheduleProvider {
   }
 
   updateSchedule(schedule) {
-    const scheduleObservable = this.db.object('/schedule/' + this.name);
+    const scheduleObservable = this.db.object('/userProfile/schedule');
     scheduleObservable.update({
       name: this.name,
       speciality: schedule.speciality,
-      doctorName: schedule.doctorName,
+      doctorName: schedule.doctorName.trim(),
       symptoms: schedule.symptoms,
       dateCreated: schedule.dateCreated,
       comment: schedule.comment

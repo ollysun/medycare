@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ScheduleProvider } from "../../providers/schedule/schedule";
 import { UtilityProvider } from "../../providers/utility/utility";
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the SchedulePage page.
@@ -16,23 +16,23 @@ import { UtilityProvider } from "../../providers/utility/utility";
   templateUrl: "schedule.html",
 })
 export class SchedulePage {
-  public scheduleForm: FormGroup;
   specialities: string[];
-  providerName: string[];
+  providerName=[];
   model: any = {
-    speciality: "",
+    specialty: "",
     doctorName: "",
     symptoms: "",
-    dateCreated: Date,
+    dateCreated: '',
     comment: "Wait for Doctor comment"
   }
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public utility: UtilityProvider,
+    public af:AuthProvider,
     public scheduleProvider: ScheduleProvider) {
     this.specialities = [
-      "Medical doctor",
+      "Medical Doctor",
       "Surgical Technologist",
       "Pharmacist",
       "Dentist",
@@ -53,14 +53,16 @@ export class SchedulePage {
   }
 
   onSelectChange = function (selectValue: any) {
-    console.log("select value", selectValue);
     if (selectValue !== "") {
-      this.providerName = this.scheduleProvider.getProviderName(selectValue.trim());
-    } else {
-      this.utility.presentToast("There is no Doctor avalilable for the specilty you selected");
-    }
+      if (this.providerName !== null)
+      {
+        this.providerName.push(this.af.getProvidersName(selectValue.trim()));                
+      }else
+      {
+        this.utility.presentToast("There is no Doctor avalilable for the specilty you selected");           
+      }
+    } 
   }
-
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad SchedulePage");
@@ -69,5 +71,6 @@ export class SchedulePage {
   scheduleNow = function () {
      this.model.dateCreated = new Date();
       this.scheduleProvider.schedule(this.model);
+      this.model = null;
   }
 }

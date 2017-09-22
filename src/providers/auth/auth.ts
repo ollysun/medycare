@@ -45,10 +45,6 @@ export class AuthProvider {
     return this.afAuth.auth.signOut();
   }
 
-  // signUpUser(newEmail: string, newPassword: string): firebase.Promise<any> {
-  //   return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPassword);
-  // }
-
   getUser = function (): firebase.User {
     return this.afAuth.auth.currentUser;
   }
@@ -126,7 +122,7 @@ export class AuthProvider {
     var name:string;
     if (this.pdobj !== undefined)
     {
-      nameobj = this.ptobj.find(c => c.email === email);  
+      nameobj = this.pdobj.find(c => c.email === email);  
       if (nameobj !== undefined)
       {
         name = nameobj.fullname;
@@ -175,6 +171,23 @@ export class AuthProvider {
       modelName = this.checkProviderName(modelEmail);
     }
     return modelName;
+  }
+
+  getProvidersName = function (specialty): string[] {
+    let names=[], nameObj:any;
+    if (this.pdobj !== undefined)
+    {
+      nameObj = this.pdobj.find(c => c.specialty === specialty);  
+      if (nameObj !== undefined)
+      {
+        names.push(nameObj.fullname);
+        return names;
+      }else {
+        return  null;
+      }
+    }else{
+     return null;
+    }
   }
 
 }
