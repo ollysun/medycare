@@ -25,8 +25,6 @@ export class HistoryProvider {
     this.diagoniseRef.subscribe(data => {
       this.diagoniseData = data;
     });
-    this.getDiagoniselist();
-    console.log('list ', this.getDiagoniselist());
   }
 
   getDiagoniselist = function (): any {

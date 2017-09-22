@@ -6,6 +6,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
 import { UtilityProvider } from '../../providers/utility/utility';
 import { AuthProvider } from '../../providers/auth/auth';
+import * as firebase from 'firebase/app';
 
 /*
   Generated class for the ScheduleProvider provider.
@@ -16,7 +17,8 @@ import { AuthProvider } from '../../providers/auth/auth';
 @Injectable()
 export class ScheduleProvider {
   private scheduleRef: FirebaseListObservable<any[]>;
-  private name: string;
+  scheduleData: any;  
+  returnObj = [];    
   constructor(public http: Http,
     public afAuth: AngularFireAuth,
     public localstore: LocalstorageProvider,
@@ -24,6 +26,10 @@ export class ScheduleProvider {
     public af:AuthProvider,
     public db: AngularFireDatabase) {
     this.scheduleRef = db.list('/userProfile/schedule/');
+    this.scheduleRef.subscribe(data => {
+      this.scheduleData = data;
+      console.log('key ', data);      
+    });
   }
 
   getProviderName = function (specialty): string[] {
@@ -55,16 +61,35 @@ export class ScheduleProvider {
     });
   }
 
-  listSchedules = function () {
-    this.scheduleRef.subscribe(data => {
-      return data;
-    });
+  listSchedules = function (): any {
+    var dataobj: any;
+    var name: string = this.af.getCurrentUserName();
+    if (this.scheduleData !== undefined) {
+      dataobj = this.scheduleData.find(c => c.name === name);
+      console.log('key ', dataobj);
+      if (dataobj !== undefined) {
+        this.returnObj.push(dataobj);
+        return this.returnObj;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+
+
+
+
+   
   }
 
   updateSchedule(schedule) {
     const scheduleObservable = this.db.object('/userProfile/schedule');
-    scheduleObservable.update({
-      name: this.name,
+    var name: string = this.af.getCurrentUserName();    
+    var Key = firebase.database().ref().child('/userProfile/schedule').push().key;
+    
+    this.scheduleRef.update(Key, {
+      name: name,
       speciality: schedule.speciality,
       doctorName: schedule.doctorName.trim(),
       symptoms: schedule.symptoms,
