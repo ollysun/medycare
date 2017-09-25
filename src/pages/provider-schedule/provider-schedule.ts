@@ -18,6 +18,7 @@ export class ProviderSchedulePage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public schedule:ScheduleProvider) {
+        this.getSchedules();
   }
 
   getSchedules = function ()
@@ -27,7 +28,7 @@ export class ProviderSchedulePage {
 
   itemTapped(event, schedule) {
     this.navCtrl.push(ScheduleDetailsPage, {
-      quote: schedule
+      schedule: schedule
     });
   }
 

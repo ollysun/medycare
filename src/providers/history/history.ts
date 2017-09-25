@@ -14,8 +14,8 @@ import { UtilityProvider } from '../../providers/utility/utility';
 @Injectable()
 export class HistoryProvider {
   private diagoniseRef: FirebaseListObservable<any[]>;
-  diagoniseData: any;
-  returnObj = [];  
+  diagoniseData = [];
+  returnObj = [];
 
   constructor(public http: Http,
     public db: AngularFireDatabase,
@@ -23,7 +23,9 @@ export class HistoryProvider {
     public utility: UtilityProvider) {
     this.diagoniseRef = db.list('/userProfile/diagonise');
     this.diagoniseRef.subscribe(data => {
-      this.diagoniseData = data;
+      data.forEach(item => {
+        this.diagoniseData.push(item);
+      });
     });
   }
 

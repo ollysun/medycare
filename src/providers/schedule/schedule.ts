@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database';
 import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
 import { UtilityProvider } from '../../providers/utility/utility';
 import { AuthProvider } from '../../providers/auth/auth';
-import * as firebase from 'firebase/app';
+//import * as firebase from 'firebase/app';
 
 /*
   Generated class for the ScheduleProvider provider.
@@ -17,19 +17,27 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class ScheduleProvider {
   private scheduleRef: FirebaseListObservable<any[]>;
-  scheduleData: any;  
-  returnObj = [];    
+  private scheduleObj: FirebaseObjectObservable<any>;
+  name: string;
+  public scheduleData = [];
+  returnObj = [];
   constructor(public http: Http,
     public afAuth: AngularFireAuth,
     public localstore: LocalstorageProvider,
     public utility: UtilityProvider,
-    public af:AuthProvider,
+    public af: AuthProvider,
     public db: AngularFireDatabase) {
-    this.scheduleRef = db.list('/userProfile/schedule/');
+    this.scheduleObj = db.object('/userProfile/schedule', { preserveSnapshot: true });
+    this.scheduleRef = db.list('/userProfile/schedule');
+    this.name = this.af.getCurrentUserName();
     this.scheduleRef.subscribe(data => {
-      this.scheduleData = data;
-      console.log('key ', data);      
+      data.forEach(item => {
+        if (item.doctorName === this.name) {
+          this.scheduleData.push(item);
+        }
+      });
     });
+    console.log('schedule ', this.scheduleData);
   }
 
   getProviderName = function (specialty): string[] {
@@ -45,7 +53,7 @@ export class ScheduleProvider {
   }
 
   schedule = function (scheduleModel) {
-    this.name = this.af.getCurrentUserName();    
+    this.name = this.af.getCurrentUserName();
     this.scheduleRef.push({
       patientName: this.name,
       specialty: scheduleModel.specialty,
@@ -61,39 +69,29 @@ export class ScheduleProvider {
     });
   }
 
-  listSchedules = function (): any {
+  listSchedules = function (): any[] {
     var dataobj: any;
-    var name: string = this.af.getCurrentUserName();
+    //var name: string = this.af.getCurrentUserName();
     if (this.scheduleData !== undefined) {
-      dataobj = this.scheduleData.find(c => c.name === name);
-      console.log('key ', dataobj);
-      if (dataobj !== undefined) {
-        this.returnObj.push(dataobj);
-        return this.returnObj;
-      } else {
-        return null;
-      }
+      // dataobj = this.scheduleData.find(c => c.doctorName === name);
+      // if (dataobj !== undefined) {
+      //   this.returnObj.push(dataobj);
+      //   return this.returnObj;
+      // } else {
+      //   return null;
+      // }
+      return this.scheduleData;
     } else {
       return null;
     }
-
-
-
-
-   
   }
 
   updateSchedule(schedule) {
-    const scheduleObservable = this.db.object('/userProfile/schedule');
-    var name: string = this.af.getCurrentUserName();    
-    var Key = firebase.database().ref().child('/userProfile/schedule').push().key;
-    
-    this.scheduleRef.update(Key, {
-      name: name,
-      speciality: schedule.speciality,
+    this.scheduleObj.update({
+      patientName: this.name,
+      specialty: schedule.specialty,
       doctorName: schedule.doctorName.trim(),
       symptoms: schedule.symptoms,
-      dateCreated: schedule.dateCreated,
       comment: schedule.comment
     }).then((user) => {
       this.utility.presentAlert('Schedule', 'Schedule Successfully Updated');

@@ -15,24 +15,20 @@
 
 <ion-content padding>
 <ion-item>
-  <ion-label stacked>Doctor Speciality</ion-label>
-  <ion-input type="text" [(ngModel)]='schedule.speciality'readonly></ion-input>
-</ion-item>
-<ion-item>
-  <ion-label stacked>Doctor Name</ion-label>
-  <ion-input type="text" [(ngModel)]='schedule.doctorName' readonly></ion-input>
+  <ion-label stacked>Patient Name</ion-label>
+  <ion-input type="text" [(ngModel)]='scheduleDetail.patientName' readonly></ion-input>
 </ion-item>
 <ion-item>
   <ion-label color="primary" stacked>Your Symptoms</ion-label>
-  <ion-textarea [(ngModel)]="schedule.symptoms" placeholder="Your Symtoms in Details" readonly>
+  <ion-textarea [(ngModel)]="scheduleDetail.symptoms" placeholder="Your Symtoms in Details" readonly>
   </ion-textarea>
 </ion-item>
 <ion-item>
   <ion-label color="primary" stacked>Comments</ion-label>
-  <ion-textarea [(ngModel)]="schedule.comments" placeholder="Please comment on the patient symptoms">
+  <ion-textarea [(ngModel)]="scheduleDetail.comment" placeholder="Please comment on the patient symptoms">
   </ion-textarea>
 </ion-item>
-<button ion-button block type="submit" (click)="updateSchedule()">
-      schedule
+<button ion-button block type="submit" (click)="update()">
+      submit
 </button>
 </ion-content>

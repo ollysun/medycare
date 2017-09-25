@@ -18,18 +18,15 @@
 
   <ion-list>
     <ion-item *ngFor="let schedule of schedules" (click)="itemTapped($event, schedule)">
-      <h2>{{schedule.name}}</h2>
-      <p>{{schedule.symptoms}}></p>
-        <ion-row>
-          <ion-col>
-            <button ion-button icon-left clear small>
-        <ion-icon name="date"></ion-icon>
-        <div>schedule.dateCreated</div>
-      </button>
-          </ion-col>
-        </ion-row>
+      <ion-row>
+        <ion-col>
+          <p>
+              <strong>{{schedule.patientName}}</strong>
+              {{schedule.symptoms}}>
+          </p>            
+        </ion-col>
+      </ion-row>
     </ion-item>
-
   </ion-list>
 
 </ion-content>

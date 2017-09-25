@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ScheduleProvider } from "../../providers/schedule/schedule";
+import { ProviderSchedulePage } from '../provider-schedule/provider-schedule';
 
 /**
  * Generated class for the ScheduleDetailsPage page.
@@ -13,17 +15,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'schedule-details.html',
 })
 export class ScheduleDetailsPage {
-  scheduleDetails = {
-    name: '',
-    speciality: '',
+  scheduleDetail = {
+    patientName: '',
+    specialty: '',
     doctorName: '',
     symptoms: '',
-    dateCreated: '',
     comment: ''
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.scheduleDetails = navParams.get('schedule');
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    public schedule:ScheduleProvider) {
+    this.scheduleDetail = navParams.get('schedule');
+  }
+
+  update()
+  {
+      this.schedule.updateSchedule(this.scheduleDetail);
+      this.navCtrl.setRoot(ProviderSchedulePage);            
   }
 
   ionViewDidLoad() {

@@ -33,6 +33,8 @@ import { UtilityProvider } from '../providers/utility/utility';
 import { HomeProviderPage } from '../pages/home-provider/home-provider';
 import { ProviderSchedulePage } from '../pages/provider-schedule/provider-schedule';
 import { HistoryDetailPage } from '../pages/history-detail/history-detail';
+import { ScheduleDetailsPage } from '../pages/schedule-details/schedule-details';
+
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { HistoryDetailPage } from '../pages/history-detail/history-detail';
     HomeProviderPage,
     ProviderSchedulePage,
     HistoryDetailPage,
+    ScheduleDetailsPage
   ],
   imports: [
     BrowserModule, HttpModule, ReactiveFormsModule,
@@ -74,6 +77,7 @@ import { HistoryDetailPage } from '../pages/history-detail/history-detail';
     HomeProviderPage,
     ProviderSchedulePage,
     HistoryDetailPage,
+    ScheduleDetailsPage
   ],
   providers: [
     StatusBar,
