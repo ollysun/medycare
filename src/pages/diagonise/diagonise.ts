@@ -180,7 +180,7 @@ export class DiagonisePage {
     'SmallPox': ["fever", "headache", "leg_rash", "hand_rash", "face_rash", "back_pain", "abdominal_pain"],
     'Strep Throat': ["sore_throat", "headache", "fever", "upset_stomach"],
     'Polio': ["sore_throat", "headache", "muscle_stiffness(leg & hand)", "malaise"],
-    'Flu': ["chest_disconfort", "cough", "sneezing", "headache", "sore_throat"],
+    'Flu': ["chest_discomfort", "cough", "sneezing", "headache", "sore_throat"],
     'Mumps': ["fever", "muscle_ache", "malaise", "low_appetite", "headache"],
   };
 
