@@ -70,7 +70,6 @@ export class ScheduleProvider {
   }
 
   listSchedules = function (): any[] {
-    var dataobj: any;
     //var name: string = this.af.getCurrentUserName();
     if (this.scheduleData !== undefined) {
       // dataobj = this.scheduleData.find(c => c.doctorName === name);

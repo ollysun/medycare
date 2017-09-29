@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {
   IonicPage, NavController, NavParams,
-  AlertController, LoadingController, Loading,Events
+  AlertController, LoadingController, Events
 } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -10,7 +10,6 @@ import { EmailValidator } from '../../validators/email';
 import { AngularFireDatabase, FirebaseListObservable }
   from 'angularfire2/database';
 import { UtilityProvider } from "../../providers/utility/utility";
-import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
 
 /**
  * Generated class for the DiagonisePage page.
@@ -80,7 +79,6 @@ export class DiagonisePage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public diagoniseData: DiagoniseProvider,
-    private localstorage: LocalstorageProvider,
     public utility: UtilityProvider,
     public events: Events
   ) {

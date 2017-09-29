@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Nav, 
+import { IonicPage, NavController, NavParams,
   MenuController, Events } from 'ionic-angular';
   import { ProviderSchedulePage } from '../provider-schedule/provider-schedule';
   import { HistoryPage } from '../history/history';
