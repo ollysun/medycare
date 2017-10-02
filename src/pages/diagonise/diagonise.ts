@@ -49,7 +49,7 @@ export class DiagonisePage {
       treatBy: 'Increasing liquid intake, warm showers, and warm compresses, especially in the nasal area, can reduce the body aches and reduce nasal congestion or head congestion. Nasal strips and humidifiers may help reduce congestion, especially while trying to sleep.'
     },
     {
-      type: 'polio',
+      type: 'Polio',
       treatBy: "Treatments vary according to the form of the disease,include antibiotics,pain-relieving medication,and physical therapy to strengthen weak muscles.Immunisation for children"
     },
     { type: 'Strep Throat', treatBy: 'Use Salt gargle .2) Throat Sprays. 3)Hot or cold food with warm tea ' },
@@ -189,8 +189,8 @@ export class DiagonisePage {
       if (symptomType.join(',') === keyV.join(',')) {
         return key;
       } else {
-        this.utility.presentToast(key);
-        console.log('key ' + false);
+        //this.utility.presentAlert('diagnosis error', key);
+        console.log('key ' + key);
       }
     }
   }
@@ -214,7 +214,7 @@ export class DiagonisePage {
   }
 
   getSicknessType(symptom: string): string {
-    let val = this._diseasesArray.find(c => c.type == symptom);
+    let val = this._diseasesArray.find(c => c.type === symptom);
     return val.treatBy;
   }
 

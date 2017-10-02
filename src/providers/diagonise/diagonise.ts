@@ -4,8 +4,7 @@ import 'rxjs/add/operator/map';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {
   AngularFireDatabase,
-  FirebaseListObservable,
-  FirebaseObjectObservable
+  FirebaseListObservable
 } from 'angularfire2/database';
 import firebase from 'firebase/app';
 import { LocalstorageProvider } from '../../providers/localstorage/localstorage';
